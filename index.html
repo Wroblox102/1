@@ -34,7 +34,7 @@
 
   html { scroll-behavior: smooth; }
 
-  /* NỀN TỐI GIẢN - KHÔNG GÂY LAG */
+  /* NỀN TỐI GIẢN */
   body {
     background-color: var(--bg);
     background-image: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(255,255,255,0) 50%), 
@@ -46,7 +46,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* NAV (Đã bỏ blur để cuộn mượt hơn) */
+  /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(255, 255, 255, 0.98);
@@ -138,16 +138,7 @@
   }
 
   .hub-info p {
-    font-size: 15px; color: #cbd5e1; line-height: 1.6; max-width: 600px; margin-bottom: 16px;
-  }
-
-  .hub-stats {
-    display: flex; gap: 20px;
-  }
-  .stat-item {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px; font-weight: 600; color: #e2e8f0;
-    background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 10px;
+    font-size: 15px; color: #cbd5e1; line-height: 1.6; max-width: 600px; 
   }
 
   /* SEARCH */
@@ -206,7 +197,7 @@
     gap: 24px;
   }
 
-  /* CARD (Đã sửa lỗi trùng màu) */
+  /* CARD */
   .card {
     background: var(--bg-2); 
     border: 1px solid var(--border);
@@ -312,15 +303,12 @@
     .hub-avatar { width: 90px; height: 90px; }
     .hub-title-row { justify-content: center; flex-wrap: wrap; }
     .hub-title-row h1 { font-size: 24px; }
-    .hub-info p { font-size: 14px; margin-bottom: 12px; }
-    .hub-stats { justify-content: center; flex-wrap: wrap; gap: 10px; }
-    .stat-item { font-size: 12px; padding: 4px 10px; }
+    .hub-info p { font-size: 14px; }
     
     .search-section { padding: 0 20px; margin: 20px auto; }
     .search-wrapper input { padding: 12px 45px 12px 16px; font-size: 14px; }
     .suggestions { left: 20px; right: 20px; width: auto; }
     
-    /* Giữ 2 cột trên điện thoại, thu nhỏ khoảng cách */
     .scripts-grid { padding: 0 15px 60px; gap: 12px; }
     
     .card { border-radius: 14px; }
@@ -330,7 +318,6 @@
     .card-title { font-size: 15px; }
     .card-category { font-size: 9px; padding: 3px 6px; }
     
-    /* Nút xếp dọc trên mobile để không bị tràn chữ */
     .card-actions { flex-direction: column; gap: 8px; }
     .btn { padding: 10px; font-size: 12px; border-radius: 8px; }
     
@@ -369,12 +356,6 @@
         <span class="verified-badge">✓ Verified</span>
       </div>
       <p>Nền tảng chia sẻ Script Roblox chất lượng cao, an toàn và cập nhật liên tục. Khám phá hàng trăm script hữu ích cho mọi tựa game hot nhất hiện nay.</p>
-      
-      <div class="hub-stats">
-        <div class="stat-item">📁 50+ Scripts</div>
-        <div class="stat-item">⚡ Cập nhật hàng ngày</div>
-        <div class="stat-item">🛡️ 100% An toàn</div>
-      </div>
     </div>
   </div>
 </section>
@@ -391,26 +372,14 @@
 
 <script>
   // =====================================================================
-  // KHU VỰC CHỈNH SỬA SCRIPT (BẠN CHỈ CẦN SỬA Ở ĐÂY)
+  // KHU VỰC CHỈNH SỬA SCRIPT (LÀM GỌN NHƯ TRONG ẢNH)
   // =====================================================================
+  // Cú pháp: { id: số, name: "Tên", category: "Thể loại", image: "Link Ảnh", linkMain: "Link Chính", linkSub: "Link Phụ" },
   const scripts = [
-    {
-      id: 1, 
-      name: "TÊN SCRIPT CỦA BẠN", // <-- Sửa tên script ở đây
-      category: "tool",           // <-- Sửa thể loại ở đây (speed, jump, esp, auto, tool...)
-
-      // 👇👇👇 GẮN LINK ẢNH VÀO ĐÂY (Thay toàn bộ link bên trong dấu ngoặc kép) 👇👇👇
-      image: "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png", 
-      
-      // 👇👇👇 GẮN LINK CHÍNH VÀO ĐÂY (Dán link của bạn vào giữa 2 dấu ngoặc kép) 👇👇👇
-      linkMain: "https://link-chinh-cua-ban.com", 
-      
-      // 👇👇👇 GẮN LINK PHỤ VÀO ĐÂY (Dán link của bạn vào giữa 2 dấu ngoặc kép) 👇👇👇
-      linkSub: "https://link-phu-cua-ban.com"
-    }
+    { id: 1, name: "Speed Hack Pro", category: "Speed", image: "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png", linkMain: "https://link-chinh-1.com", linkSub: "https://link-phu-1.com" }
   ];
   // =====================================================================
-  // KẾT THÚC KHU VỰC CHỈNH SỬA (KHÔNG SỬA CODE BÊN DƯỚI)
+  // KẾT THÚC KHU VỰC CHỈNH SỬA
   // =====================================================================
 
   const grid = document.getElementById('grid');
