@@ -6,7 +6,7 @@
 <title>W Roblox — Script Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #08080f;
@@ -111,455 +111,208 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* AVATAR NGƯỜI DÙNG */
-  .user-profile {
-    display: flex; align-items: center; gap: 12px;
-  }
-
+  /* AVATAR */
+  .user-profile { display: flex; align-items: center; gap: 12px; }
   .avatar-container {
-    position: relative;
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    padding: 2px;
+    position: relative; width: 42px; height: 42px;
+    border-radius: 50%; padding: 2px;
     background: var(--gradient);
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
-    transition: 0.3s ease;
-    cursor: pointer;
+    transition: 0.3s ease; cursor: pointer;
   }
-
-  .avatar-container:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
-  }
-
-  .user-avatar {
-    width: 100%; height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--bg);
-    display: block;
-  }
-
+  .avatar-container:hover { transform: scale(1.08); box-shadow: 0 0 25px rgba(139, 92, 246, 0.8); }
+  .user-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); display: block; }
   .status-dot {
-    position: absolute;
-    bottom: 1px; right: 1px;
-    width: 10px; height: 10px;
-    background-color: var(--success);
-    border: 2px solid var(--bg);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--success);
+    position: absolute; bottom: 1px; right: 1px;
+    width: 10px; height: 10px; background-color: var(--success);
+    border: 2px solid var(--bg); border-radius: 50%; box-shadow: 0 0 8px var(--success);
   }
 
   /* HERO */
   .hero {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 80px 40px 40px;
-    text-align: center;
+    max-width: 1200px; margin: 0 auto;
+    padding: 60px 40px 30px; text-align: center;
   }
-
   .hero h1 {
-    font-size: clamp(38px, 6vw, 72px);
-    font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -2px;
-    margin-bottom: 20px;
+    font-size: clamp(38px, 6vw, 60px); font-weight: 900;
+    line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
   }
   .hero h1 .gradient {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    background: var(--gradient); -webkit-background-clip: text;
+    background-clip: text; -webkit-text-fill-color: transparent;
   }
+  .hero p { font-size: 17px; color: var(--text-dim); max-width: 600px; margin: 0 auto; line-height: 1.6; }
 
-  .hero p {
-    font-size: 18px;
-    color: var(--text-dim);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* SEARCH */
+  /* SEARCH & SUGGESTIONS */
   .search-section {
-    max-width: 700px;
-    margin: 30px auto 50px;
-    padding: 0 40px;
-    position: relative;
+    max-width: 700px; margin: 30px auto 50px; padding: 0 40px; position: relative;
   }
-
   .search-wrapper {
-    position: relative;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 4px;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
+    position: relative; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 16px;
+    padding: 4px; transition: 0.3s; backdrop-filter: blur(10px);
   }
   .search-wrapper:focus-within {
-    border-color: var(--border-hover);
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+    border-color: var(--border-hover); box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
   }
-
   .search-wrapper input {
-    width: 100%;
-    padding: 16px 60px 16px 20px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text);
-    font-size: 15px;
-    font-family: inherit;
+    width: 100%; padding: 16px 60px 16px 20px;
+    background: transparent; border: none; outline: none;
+    color: var(--text); font-size: 15px; font-family: inherit;
   }
   .search-wrapper input::placeholder { color: var(--text-mute); }
-
   .search-icon {
-    position: absolute;
-    right: 20px; top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-mute);
-    font-size: 18px;
-    pointer-events: none;
+    position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+    color: var(--text-mute); font-size: 18px; pointer-events: none;
   }
 
-  /* GRID */
+  /* DROPDOWN GỢI Ý TÌM KIẾM */
+  .suggestions {
+    position: absolute; top: 100%; left: 40px; right: 40px;
+    background: var(--bg-2); border: 1px solid var(--border);
+    border-radius: 12px; margin-top: 8px;
+    max-height: 250px; overflow-y: auto; display: none; z-index: 90;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  }
+  .suggestions.show { display: block; }
+  .suggestion-item {
+    padding: 14px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border); transition: 0.2s;
+  }
+  .suggestion-item:last-child { border-bottom: none; }
+  .suggestion-item:hover { background: var(--surface-2); }
+  .suggestion-item img {
+    width: 28px; height: 28px; border-radius: 6px; object-fit: cover;
+  }
+  .suggestion-item span { font-size: 14px; font-weight: 600; color: var(--text); }
+  .suggestion-item small { color: var(--text-mute); font-size: 12px; margin-left: auto; }
+
+  /* GRID - CHIA LÀM 2 CỘT */
   .scripts-grid {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 0 40px 80px;
+    max-width: 1300px; margin: 0 auto; padding: 0 40px 80px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* 2 cột */
     gap: 24px;
   }
 
+  /* CARD */
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 20px; padding: 0; position: relative;
+    overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px); display: flex; flex-direction: column;
   }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 60%);
-    opacity: 0;
-    transition: 0.4s;
-    pointer-events: none;
-  }
-
   .card:hover {
-    transform: translateY(-6px);
-    border-color: var(--border-hover);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    transform: translateY(-5px); border-color: var(--border-hover);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
   }
-  .card:hover::before { opacity: 1; }
 
+  /* ẢNH SCRIPT */
+  .card-image {
+    width: 100%; height: 160px; background: #1a1a2e; overflow: hidden; position: relative;
+  }
+  .card-image img {
+    width: 100%; height: 100%; object-fit: cover; transition: 0.4s;
+  }
+  .card:hover .card-image img { transform: scale(1.05); }
+
+  /* NỘI DUNG CARD */
+  .card-content {
+    padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;
+  }
   .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
   }
-
-  .card-title-wrap { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
-
-  .card-icon {
-    width: 44px; height: 44px;
-    flex-shrink: 0;
-    border-radius: 12px;
-    background: var(--gradient);
-    display: grid; place-items: center;
-    font-size: 20px;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-  }
-
-  .card-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--text);
-    line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
+  .card-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .card-title { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.2; }
   .card-category {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px;
   }
-
   .verified {
     display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-radius: 8px;
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--success);
-    flex-shrink: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    padding: 4px 10px; background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;
+    font-size: 10px; font-weight: 700; color: var(--success);
+    flex-shrink: 0; text-transform: uppercase;
   }
-
   .card-desc {
-    font-size: 14px;
-    color: var(--text-dim);
-    line-height: 1.6;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 14px; color: var(--text-dim); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
-
   .card-meta {
-    display: flex;
-    gap: 16px;
-    font-size: 12px;
-    color: var(--text-mute);
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
+    display: flex; gap: 16px; font-size: 12px; color: var(--text-mute);
+    padding-top: 12px; border-top: 1px solid var(--border);
   }
-  .card-meta span { display: flex; align-items: center; gap: 5px; }
-
-  .card-actions {
-    display: flex; gap: 10px; margin-top: auto;
-  }
-
+  
+  /* NÚT LINK CHÍNH / PHỤ */
+  .card-actions { display: flex; gap: 10px; margin-top: auto; }
   .btn {
-    padding: 12px;
-    border-radius: 12px;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    flex: 1; padding: 12px; border-radius: 12px; border: none;
+    font-size: 14px; font-weight: 700; font-family: inherit;
+    cursor: pointer; transition: 0.3s; text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-
-  .btn-primary {
-    flex: 1;
-    background: var(--gradient);
-    color: white;
+  .btn-main {
+    background: var(--gradient); color: white;
     box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
   }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
+  
+  .btn-sub {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
   }
-  .btn-primary.copied {
-    background: linear-gradient(135deg, #10b981, #059669);
-  }
-
-  .btn-icon {
-    padding: 12px 14px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-  }
-  .btn-icon:hover { color: var(--text); border-color: var(--border-hover); }
+  .btn-sub:hover { border-color: var(--border-hover); background: rgba(139, 92, 246, 0.1); }
 
   /* EMPTY */
   .empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 100px 20px;
-    color: var(--text-mute);
+    grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--text-mute);
   }
-  .empty-icon { font-size: 80px; margin-bottom: 20px; opacity: 0.5; }
-  .empty h3 { color: var(--text-dim); margin-bottom: 8px; font-size: 20px; }
+  .empty-icon { font-size: 60px; margin-bottom: 15px; opacity: 0.5; }
 
-  /* MODAL */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 1000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    opacity: 0;
-    transition: 0.3s;
+  /* NÚT NHẠC */
+  .music-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--surface-2); border: 1px solid var(--border);
+    color: var(--text); font-size: 22px; cursor: pointer;
+    display: grid; place-items: center; z-index: 1000;
+    backdrop-filter: blur(10px); transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
   }
-  .modal-overlay.show { display: flex; opacity: 1; }
-
-  .modal {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    width: 100%;
-    max-width: 800px;
-    max-height: 90vh;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transform: scale(0.9);
-    transition: 0.3s;
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+  .music-btn:hover { transform: scale(1.1); border-color: var(--border-hover); }
+  .music-btn.playing {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); border-color: var(--primary);
+    animation: rotateMusic 4s linear infinite;
   }
-  .modal-overlay.show .modal { transform: scale(1); }
-
-  .modal-header {
-    padding: 24px 28px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .modal-title { font-size: 20px; font-weight: 700; }
-  .modal-title .accent { color: var(--accent); }
-
-  .modal-close {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: 20px;
-    cursor: pointer;
-    transition: 0.2s;
-    display: grid; place-items: center;
-  }
-  .modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: #ef4444; }
-
-  .modal-body {
-    padding: 28px;
-    overflow-y: auto;
-    flex: 1;
-  }
-
-  .modal-code {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    color: #a5d6ff;
-    line-height: 1.7;
-    overflow-x: auto;
-    white-space: pre;
-    max-height: 400px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-  }
-
-  .modal-code::-webkit-scrollbar { width: 8px; height: 8px; }
-  .modal-code::-webkit-scrollbar-track { background: transparent; }
-  .modal-code::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-  .modal-actions { display: flex; gap: 12px; }
-
-  /* TOAST */
-  .toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translate(-50%, 150px);
-    background: rgba(16, 185, 129, 0.95);
-    backdrop-filter: blur(10px);
-    color: white;
-    padding: 14px 24px;
-    border-radius: 14px;
-    font-weight: 600;
-    font-size: 14px;
-    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
-    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 2000;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .toast.show { transform: translate(-50%, 0); }
+  @keyframes rotateMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
   /* FOOTER */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 40px;
-    text-align: center;
-    color: var(--text-mute);
-    font-size: 14px;
-  }
-  footer .gradient {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
-  }
-
-  /* CSS CHO NÚT NHẠC (MỚI THÊM) */
-  .music-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-size: 24px;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  }
-  .music-btn:hover {
-    transform: scale(1.1);
-    border-color: var(--border-hover);
-  }
-  .music-btn.playing {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
-    border-color: var(--primary);
-    animation: rotateMusic 4s linear infinite;
-  }
-  @keyframes rotateMusic {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    border-top: 1px solid var(--border); padding: 30px;
+    text-align: center; color: var(--text-mute); font-size: 14px;
   }
 
   /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .scripts-grid { grid-template-columns: 1fr; } /* Về 1 cột trên mobile */
+  }
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
-    .hero { padding: 60px 20px 20px; }
+    .hero { padding: 40px 20px 20px; }
     .search-section { padding: 0 20px; }
-    .scripts-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
-    .modal-body { padding: 20px; }
+    .suggestions { left: 20px; right: 20px; }
+    .scripts-grid { padding: 0 20px 60px; }
     .music-btn { bottom: 20px; right: 20px; }
   }
 </style>
 </head>
 <body>
 
-<!-- THẺ AUDIO CHỨA NHẠC NỀN -->
+<!-- NHẠC NỀN -->
 <audio id="bgMusic" loop>
   <source src="nhac.mp3" type="audio/mpeg">
 </audio>
-
-<!-- NÚT BẬT TẮT NHẠC -->
 <button class="music-btn" id="musicToggle" title="Bật/Tắt nhạc">
   <span id="musicIcon">🎵</span>
 </button>
@@ -569,8 +322,6 @@
     <div class="logo-icon">⚡</div>
     <div class="logo-text">W <span class="accent">Roblox</span></div>
   </div>
-  
-  <!-- AVATAR CỦA BẠN Ở ĐÂY -->
   <div class="user-profile">
     <div class="avatar-container">
       <img src="https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png" alt="Avatar" class="user-avatar">
@@ -586,47 +337,89 @@
 
 <div class="search-section">
   <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng...">
+    <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng..." autocomplete="off">
     <span class="search-icon">🔍</span>
   </div>
+  <!-- Bảng gợi ý tìm kiếm -->
+  <div class="suggestions" id="suggestions"></div>
 </div>
 
 <main class="scripts-grid" id="grid"></main>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title" id="modalTitle">Script</div>
-      <button class="modal-close" id="modalClose">✕</button>
-    </div>
-    <div class="modal-body">
-      <pre class="modal-code" id="modalCode"></pre>
-      <div class="modal-actions">
-        <button class="btn btn-primary" id="modalCopy" style="flex:1">📋 Copy Script</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">✅ Đã sao chép script!</div>
-
 <footer>
-  Made with <span class="gradient">❤️</span> for the Roblox community · © 2025 W Roblox<br>
-  <small style="opacity:0.6">Sử dụng có trách nhiệm · Tôn trọng Roblox ToS</small>
+  Made with <span style="color:var(--primary)">❤️</span> for the Roblox community · © 2025 W Roblox<br>
 </footer>
 
 <script>
+  // ================= DỮ LIỆU SCRIPT =================
+  // Bạn có thể sửa "image", "linkMain", "linkSub" cho từng script ở đây
+  const defaultImage = "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png"; // Ảnh mặc định (Avatar của bạn)
+
+  const scripts = [
+    {
+      id: 1, name: "Speed Hack Pro", category: "speed", verified: true,
+      desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
+      views: "42.5K", rating: 4.9,
+      image: defaultImage, // Thay link ảnh riêng vào đây
+      linkMain: "https://example.com/main1", // Thay link chính vào đây
+      linkSub: "https://example.com/sub1"    // Thay link phụ vào đây
+    },
+    {
+      id: 2, name: "Mega Jump", category: "jump", verified: true,
+      desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
+      views: "28.1K", rating: 4.7,
+      image: defaultImage,
+      linkMain: "https://example.com/main2",
+      linkSub: "https://example.com/sub2"
+    },
+    {
+      id: 3, name: "Advanced ESP", category: "esp", verified: true,
+      desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
+      views: "61.2K", rating: 5.0,
+      image: defaultImage,
+      linkMain: "https://example.com/main3",
+      linkSub: "https://example.com/sub3"
+    },
+    {
+      id: 4, name: "Auto Farm Ultimate", category: "auto", verified: true,
+      desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
+      views: "89.4K", rating: 4.8,
+      image: defaultImage,
+      linkMain: "https://example.com/main4",
+      linkSub: "https://example.com/sub4"
+    },
+    {
+      id: 5, name: "Fly V3", category: "tool", verified: false,
+      desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
+      views: "35.7K", rating: 4.5,
+      image: defaultImage,
+      linkMain: "https://example.com/main5",
+      linkSub: "https://example.com/sub5"
+    },
+    {
+      id: 6, name: "Infinite Yield", category: "tool", verified: true,
+      desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
+      views: "152K", rating: 5.0,
+      image: defaultImage,
+      linkMain: "https://example.com/main6",
+      linkSub: "https://example.com/sub6"
+    }
+  ];
+
+  const grid = document.getElementById('grid');
+  const searchInput = document.getElementById('searchInput');
+  const suggestionsBox = document.getElementById('suggestions');
+  
+  let currentSearch = '';
+
   // ================= XỬ LÝ NHẠC NỀN =================
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
   const musicIcon = document.getElementById('musicIcon');
   let isMusicPlaying = false;
 
-  // Đặt âm lượng (từ 0.0 đến 1.0) - Bạn có thể sửa 0.4 thành số khác nếu muốn to/nhỏ
   bgMusic.volume = 0.4; 
 
-  // Hàm phát nhạc
   function playMusic() {
     const playPromise = bgMusic.play();
     if (playPromise !== undefined) {
@@ -634,8 +427,7 @@
         isMusicPlaying = true;
         musicIcon.textContent = '🎵';
         musicToggle.classList.add('playing');
-      }).catch(error => {
-        // Trình duyệt chặn tự động phát
+      }).catch(() => {
         isMusicPlaying = false;
         musicIcon.textContent = '🔇';
         musicToggle.classList.remove('playing');
@@ -643,21 +435,15 @@
     }
   }
 
-  // 1. Cố gắng tự động phát khi vừa vào web
   playMusic();
 
-  // 2. Nếu bị chặn, phát nhạc ngay khi người dùng click/chạm vào web lần đầu
   document.addEventListener('click', function initAudio() {
-    if (!isMusicPlaying) {
-      playMusic();
-    }
-    // Chỉ kích hoạt 1 lần
+    if (!isMusicPlaying) playMusic();
     document.removeEventListener('click', initAudio);
   }, { once: true });
 
-  // 3. Nút bật/tắt nhạc thủ công
   musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Ngăn việc click nút này kích hoạt tính năng phát nhạc tự động ở trên
+    e.stopPropagation();
     if (isMusicPlaying) {
       bgMusic.pause();
       isMusicPlaying = false;
@@ -670,73 +456,9 @@
       musicToggle.classList.add('playing');
     }
   });
-  // ==================================================
 
-  const scripts = [
-    {
-      id: 1, name: "Speed Hack Pro", category: "speed", icon: "⚡", verified: true,
-      desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
-      views: "42.5K", rating: 4.9,
-      code: `-- Speed Hack Pro v2.1\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nlocal humanoid = char:WaitForChild("Humanoid")\n\nhumanoid.WalkSpeed = 100\n\n-- Auto update khi respawn\nplayer.CharacterAdded:Connect(function(c)\n    c:WaitForChild("Humanoid").WalkSpeed = 100\nend)\n\nprint("✅ Speed Hack đã bật!")`
-    },
-    {
-      id: 2, name: "Mega Jump", category: "jump", icon: "🦘", verified: true,
-      desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
-      views: "28.1K", rating: 4.7,
-      code: `-- Mega Jump Script\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nlocal humanoid = char:WaitForChild("Humanoid")\n\nhumanoid.JumpPower = 200\nhumanoid.UseJumpPower = true\n\n-- Infinite jump\nlocal UIS = game:GetService("UserInputService")\nUIS.JumpRequest:Connect(function()\n    char.Humanoid:ChangeState("Jumping")\nend)`
-    },
-    {
-      id: 3, name: "Advanced ESP", category: "esp", icon: "👁️", verified: true,
-      desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
-      views: "61.2K", rating: 5.0,
-      code: `-- Advanced ESP\nlocal function createESP(plr)\n    if plr == game.Players.LocalPlayer then return end\n    if not plr.Character then return end\n    \n    local hl = Instance.new("Highlight")\n    hl.FillColor = Color3.fromRGB(255, 0, 0)\n    hl.FillTransparency = 0.5\n    hl.OutlineColor = Color3.fromRGB(255, 255, 255)\n    hl.Parent = plr.Character\n    \n    local bb = Instance.new("BillboardGui")\n    bb.Size = UDim2.new(0, 100, 0, 50)\n    bb.StudsOffset = Vector3.new(0, 3, 0)\n    bb.AlwaysOnTop = true\n    bb.Parent = plr.Character.Head\n    \n    local name = Instance.new("TextLabel")\n    name.Size = UDim2.new(1, 0, 1, 0)\n    name.BackgroundTransparency = 1\n    name.Text = plr.Name\n    name.TextColor3 = Color3.new(1, 1, 1)\n    name.TextStrokeTransparency = 0\n    name.Parent = bb\nend\n\nfor _, p in pairs(game.Players:GetPlayers()) do createESP(p) end\ngame.Players.PlayerAdded:Connect(function(p) p.CharacterAdded:Connect(function() createESP(p) end) end)`
-    },
-    {
-      id: 4, name: "Auto Farm Ultimate", category: "auto", icon: "🤖", verified: true,
-      desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
-      views: "89.4K", rating: 4.8,
-      code: `-- Auto Farm Ultimate\nlocal player = game.Players.LocalPlayer\nlocal hrp = player.Character:WaitForChild("HumanoidRootPart")\n\nwhile task.wait(0.1) do\n    for _, obj in pairs(workspace:GetDescendants()) do\n        if obj.Name == "Coin" or obj.Name == "Gem" then\n            pcall(function()\n                obj.CFrame = hrp.CFrame\n            end)\n        end\n    end\nend`
-    },
-    {
-      id: 5, name: "Fly V3", category: "tool", icon: "🕊️", verified: false,
-      desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
-      views: "35.7K", rating: 4.5,
-      code: `-- Fly V3\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character\nlocal hrp = char.HumanoidRootPart\n\nlocal bp = Instance.new("BodyPosition", hrp)\nbp.MaxForce = Vector3.new(1e6, 1e6, 1e6)\nbp.Position = hrp.Position\n\nlocal bg = Instance.new("BodyGyro", hrp)\nbg.MaxTorque = Vector3.new(1e6, 1e6, 1e6)\nbg.P = 1000`
-    },
-    {
-      id: 6, name: "Infinite Yield", category: "tool", icon: "♾️", verified: true,
-      desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
-      views: "152K", rating: 5.0,
-      code: `-- Infinite Yield Admin\nloadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()`
-    },
-    {
-      id: 7, name: "Noclip Ghost", category: "tool", icon: "👻", verified: false,
-      desc: "Đi xuyên qua tường, sàn nhà và mọi vật thể trong game.",
-      views: "22.3K", rating: 4.3,
-      code: `-- Noclip\nlocal player = game.Players.LocalPlayer\nlocal noclip = true\n\nplayer.Character.HumanoidRootPart.CanCollide = false\nfor _, v in pairs(player.Character:GetDescendants()) do\n    if v:IsA("BasePart") then\n        v.CanCollide = false\n    end\nend`
-    },
-    {
-      id: 8, name: "Auto Clicker 1000 CPS", category: "auto", icon: "👆", verified: false,
-      desc: "Tự động click chuột với tốc độ cực cao cho các game clicker.",
-      views: "45.9K", rating: 4.6,
-      code: `-- Auto Clicker\nlocal VIM = game:GetService("VirtualInputManager")\n\nwhile task.wait(0.001) do\n    VIM:SendMouseButtonEvent(0, 0, 0, true, game, 1)\n    VIM:SendMouseButtonEvent(0, 0, 0, false, game, 1)\nend`
-    }
-  ];
-
-  const grid = document.getElementById('grid');
-  const searchInput = document.getElementById('searchInput');
-  const toast = document.getElementById('toast');
-  const modal = document.getElementById('modal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalCode = document.getElementById('modalCode');
-  const modalCopy = document.getElementById('modalCopy');
-  const modalClose = document.getElementById('modalClose');
-
-  let currentSearch = '';
-  let activeScript = null;
-
-  // ===== RENDER =====
-  function render() {
+  // ================= RENDER SCRIPT =================
+  function renderScripts() {
     const filtered = scripts.filter(s => {
       return s.name.toLowerCase().includes(currentSearch) ||
              s.desc.toLowerCase().includes(currentSearch);
@@ -759,100 +481,93 @@
       card.className = 'card';
       card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
       card.innerHTML = `
-        <div class="card-header">
-          <div class="card-title-wrap">
-            <div class="card-icon">${s.icon}</div>
-            <div style="min-width:0">
+        <!-- KHUNG ẢNH -->
+        <div class="card-image">
+          <img src="${s.image}" alt="${s.name}">
+        </div>
+        
+        <div class="card-content">
+          <div class="card-header">
+            <div class="card-title-wrap">
               <div class="card-title">${s.name}</div>
               <div class="card-category">${s.category.toUpperCase()}</div>
             </div>
+            ${s.verified ? '<span class="verified">✓ Verified</span>' : ''}
           </div>
-          ${s.verified ? '<span class="verified">✓ Verified</span>' : ''}
-        </div>
-        <p class="card-desc">${s.desc}</p>
-        <div class="card-meta">
-          <span>👁 ${s.views}</span>
-          <span>⭐ ${s.rating}</span>
-        </div>
-        <div class="card-actions">
-          <button class="btn btn-primary" data-copy="${s.id}">📋 Copy</button>
-          <button class="btn btn-icon" data-view="${s.id}" title="Xem code">👁 Xem</button>
+          
+          <p class="card-desc">${s.desc}</p>
+          
+          <div class="card-meta">
+            <span>👁 ${s.views}</span>
+            <span>⭐ ${s.rating}</span>
+          </div>
+          
+          <!-- NÚT LINK CHÍNH / PHỤ -->
+          <div class="card-actions">
+            <a href="${s.linkMain}" target="_blank" class="btn btn-main">🔗 Link Chính</a>
+            <a href="${s.linkSub}" target="_blank" class="btn btn-sub">📁 Link Phụ</a>
+          </div>
         </div>
       `;
-
-      card.querySelector('[data-copy]').addEventListener('click', e => {
-        e.stopPropagation();
-        copyScript(s.code, e.target);
-      });
-      card.querySelector('[data-view]').addEventListener('click', e => {
-        e.stopPropagation();
-        openModal(s);
-      });
-      card.addEventListener('click', () => openModal(s));
-
       grid.appendChild(card);
     });
   }
 
-  // ===== COPY =====
-  async function copyScript(code, btn) {
-    try {
-      await navigator.clipboard.writeText(code);
-    } catch {
-      const ta = document.createElement('textarea');
-      ta.value = code;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
+  // ================= GỢI Ý TÌM KIẾM =================
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase().trim();
+    currentSearch = val;
+    
+    // Cập nhật lưới script
+    renderScripts();
+
+    // Xử lý bảng gợi ý
+    suggestionsBox.innerHTML = '';
+    if (val.length > 0) {
+      const matches = scripts.filter(s => s.name.toLowerCase().includes(val));
+      
+      if (matches.length > 0) {
+        matches.forEach(m => {
+          const item = document.createElement('div');
+          item.className = 'suggestion-item';
+          item.innerHTML = `
+            <img src="${m.image}" alt="${m.name}">
+            <span>${m.name}</span>
+            <small>${m.category}</small>
+          `;
+          // Khi bấm vào gợi ý
+          item.addEventListener('click', () => {
+            searchInput.value = m.name;
+            currentSearch = m.name.toLowerCase();
+            renderScripts();
+            suggestionsBox.classList.remove('show');
+          });
+          suggestionsBox.appendChild(item);
+        });
+        suggestionsBox.classList.add('show');
+      } else {
+        suggestionsBox.classList.remove('show');
+      }
+    } else {
+      suggestionsBox.classList.remove('show');
     }
-    if (btn) {
-      const original = btn.innerHTML;
-      btn.innerHTML = '✅ Đã copy!';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.innerHTML = original;
-        btn.classList.remove('copied');
-      }, 1500);
-    }
-    showToast();
-  }
-
-  function showToast() {
-    toast.classList.add('show');
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(() => toast.classList.remove('show'), 2000);
-  }
-
-  // ===== MODAL =====
-  function openModal(s) {
-    activeScript = s;
-    modalTitle.innerHTML = `${s.icon} ${s.name} <span class="accent">· ${s.category}</span>`;
-    modalCode.textContent = s.code;
-    modal.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modal.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  modalClose.addEventListener('click', closeModal);
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-  modalCopy.addEventListener('click', () => {
-    if (activeScript) copyScript(activeScript.code, modalCopy);
   });
 
-  // ===== EVENTS =====
-  searchInput.addEventListener('input', e => {
-    currentSearch = e.target.value.toLowerCase().trim();
-    render();
+  // Ẩn gợi ý khi bấm ra ngoài
+  document.addEventListener('click', (e) => {
+    if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.classList.remove('show');
+    }
   });
 
-  // ===== ANIMATION =====
+  // Khôi phục gợi ý khi focus lại vào ô search (nếu có chữ)
+  searchInput.addEventListener('focus', () => {
+    if (searchInput.value.trim().length > 0) {
+      suggestionsBox.classList.add('show');
+    }
+  });
+
+  // Hiệu ứng xuất hiện
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeIn {
@@ -862,7 +577,8 @@
   `;
   document.head.appendChild(style);
 
-  render();
+  // Chạy lần đầu
+  renderScripts();
 </script>
 
 </body>
