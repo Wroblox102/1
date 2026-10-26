@@ -120,8 +120,8 @@
     position: relative;
     width: 42px; height: 42px;
     border-radius: 50%;
-    padding: 2px; /* Tạo viền dày */
-    background: var(--gradient); /* Viền gradient */
+    padding: 2px;
+    background: var(--gradient);
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
     transition: 0.3s ease;
     cursor: pointer;
@@ -136,7 +136,7 @@
     width: 100%; height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--bg); /* Viền đen tách biệt với gradient */
+    border: 2px solid var(--bg);
     display: block;
   }
 
@@ -506,6 +506,41 @@
     font-weight: 700;
   }
 
+  /* CSS CHO NÚT NHẠC (MỚI THÊM) */
+  .music-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 24px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  .music-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--border-hover);
+  }
+  .music-btn.playing {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+    border-color: var(--primary);
+    animation: rotateMusic 4s linear infinite;
+  }
+  @keyframes rotateMusic {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
@@ -513,10 +548,21 @@
     .search-section { padding: 0 20px; }
     .scripts-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
     .modal-body { padding: 20px; }
+    .music-btn { bottom: 20px; right: 20px; }
   }
 </style>
 </head>
 <body>
+
+<!-- THẺ AUDIO CHỨA NHẠC NỀN -->
+<audio id="bgMusic" loop>
+  <source src="nhac.mp3" type="audio/mpeg">
+</audio>
+
+<!-- NÚT BẬT TẮT NHẠC -->
+<button class="music-btn" id="musicToggle" title="Bật/Tắt nhạc">
+  <span id="musicIcon">🎵</span>
+</button>
 
 <nav>
   <div class="logo">
@@ -571,6 +617,61 @@
 </footer>
 
 <script>
+  // ================= XỬ LÝ NHẠC NỀN =================
+  const bgMusic = document.getElementById('bgMusic');
+  const musicToggle = document.getElementById('musicToggle');
+  const musicIcon = document.getElementById('musicIcon');
+  let isMusicPlaying = false;
+
+  // Đặt âm lượng (từ 0.0 đến 1.0) - Bạn có thể sửa 0.4 thành số khác nếu muốn to/nhỏ
+  bgMusic.volume = 0.4; 
+
+  // Hàm phát nhạc
+  function playMusic() {
+    const playPromise = bgMusic.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        isMusicPlaying = true;
+        musicIcon.textContent = '🎵';
+        musicToggle.classList.add('playing');
+      }).catch(error => {
+        // Trình duyệt chặn tự động phát
+        isMusicPlaying = false;
+        musicIcon.textContent = '🔇';
+        musicToggle.classList.remove('playing');
+      });
+    }
+  }
+
+  // 1. Cố gắng tự động phát khi vừa vào web
+  playMusic();
+
+  // 2. Nếu bị chặn, phát nhạc ngay khi người dùng click/chạm vào web lần đầu
+  document.addEventListener('click', function initAudio() {
+    if (!isMusicPlaying) {
+      playMusic();
+    }
+    // Chỉ kích hoạt 1 lần
+    document.removeEventListener('click', initAudio);
+  }, { once: true });
+
+  // 3. Nút bật/tắt nhạc thủ công
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // Ngăn việc click nút này kích hoạt tính năng phát nhạc tự động ở trên
+    if (isMusicPlaying) {
+      bgMusic.pause();
+      isMusicPlaying = false;
+      musicIcon.textContent = '🔇';
+      musicToggle.classList.remove('playing');
+    } else {
+      bgMusic.play();
+      isMusicPlaying = true;
+      musicIcon.textContent = '🎵';
+      musicToggle.classList.add('playing');
+    }
+  });
+  // ==================================================
+
   const scripts = [
     {
       id: 1, name: "Speed Hack Pro", category: "speed", icon: "⚡", verified: true,
