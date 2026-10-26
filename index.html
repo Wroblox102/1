@@ -184,7 +184,7 @@
   .suggestion-item span { font-size: 14px; font-weight: 600; color: var(--text); }
   .suggestion-item small { color: var(--text-mute); font-size: 12px; margin-left: auto; }
 
-  /* GRID - 2 CỘT */
+  /* GRID - 2 CỘT MẶC ĐỊNH */
   .scripts-grid {
     max-width: 1300px; margin: 0 auto; padding: 0 40px 80px;
     display: grid;
@@ -278,30 +278,39 @@
   }
   @keyframes rotateMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border); padding: 30px;
-    text-align: center; color: var(--text-mute); font-size: 14px;
-    background: var(--bg-2);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    .scripts-grid { grid-template-columns: 1fr; }
-  }
+  /* ================= RESPONSIVE ĐÃ SỬA ================= */
+  /* Điện thoại và máy tính bảng nhỏ */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .hero { padding: 40px 20px 20px; }
     .search-section { padding: 0 20px; }
     .suggestions { left: 20px; right: 20px; }
-    .scripts-grid { padding: 0 20px 60px; }
-    .music-btn { bottom: 20px; right: 20px; }
+    
+    /* Giữ 2 cột nhưng thu nhỏ khoảng cách và padding */
+    .scripts-grid { 
+      padding: 0 15px 60px; 
+      gap: 12px; /* Giảm gap cho vừa màn hình nhỏ */
+    }
+    
+    /* Thu nhỏ thẻ card trên mobile */
+    .card { border-radius: 14px; }
+    .card-image { height: 100px; } /* Ảnh thấp lại */
+    .card-content { padding: 12px; gap: 8px; }
+    .card-title { font-size: 14px; }
+    .card-category { font-size: 9px; }
+    .card-desc { font-size: 11px; margin-bottom: 4px; }
+    
+    /* Chuyển 2 nút thành 2 hàng dọc để không bị tràn chữ */
+    .card-actions { flex-direction: column; gap: 6px; }
+    .btn { padding: 8px; font-size: 11px; border-radius: 8px; }
+    
+    .music-btn { bottom: 20px; right: 20px; width: 45px; height: 45px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ĐÃ THÊM playsinline CHO ĐIỆN THOẠI -->
+<!-- NHẠC NỀN -->
 <audio id="bgMusic" loop playsinline preload="auto">
   <source src="nhac.mp3" type="audio/mpeg">
 </audio>
@@ -330,7 +339,8 @@
 
 <div class="search-section">
   <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng..." autocomplete="off">
+    <!-- Đã đổi placeholder thành Tìm Script... -->
+    <input type="text" id="searchInput" placeholder="Tìm Script..." autocomplete="off">
     <span class="search-icon">🔍</span>
   </div>
   <div class="suggestions" id="suggestions"></div>
@@ -338,13 +348,10 @@
 
 <main class="scripts-grid" id="grid"></main>
 
-<footer>
-  Made with <span style="color:var(--primary)">❤️</span> for the Roblox community · © 2025 W Roblox<br>
-</footer>
+<!-- ĐÃ XÓA FOOTER Ở ĐÂY -->
 
 <script>
   // ================= DỮ LIỆU SCRIPT =================
-  // Đã xóa trường "verified"
   const defaultImage = "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png"; 
 
   const scripts = [
@@ -375,63 +382,51 @@
   const suggestionsBox = document.getElementById('suggestions');
   let currentSearch = '';
 
-  // ================= XỬ LÝ NHẠC NỀN (TỐI ƯU CHO MOBILE) =================
+  // ================= XỬ LÝ NHẠC NỀN =================
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
   const musicIcon = document.getElementById('musicIcon');
   
-  let isMutedByUser = false; // Trạng thái người dùng chủ động tắt
+  let isMutedByUser = false; 
 
   bgMusic.volume = 0.4; 
 
-  // Hàm thử phát nhạc
   function attemptPlay() {
-    if (isMutedByUser) return; // Nếu đã chủ động tắt thì không phát
+    if (isMutedByUser) return; 
 
     bgMusic.play().then(() => {
-      // Phát thành công
       musicIcon.textContent = '🎵';
       musicToggle.classList.add('playing');
-      // Xóa sự kiện bắt click/touch đầu tiên vì đã phát được rồi
       document.removeEventListener('click', initAudio);
       document.removeEventListener('touchstart', initAudio);
     }).catch((error) => {
-      // Trình duyệt chặn (thường là do chưa tương tác)
-      console.log("Chờ người dùng tương tác để phát nhạc...");
+      // Chờ tương tác
     });
   }
 
-  // Sự kiện bắt lần chạm/click đầu tiên
   function initAudio(e) {
-    // Bỏ qua nếu click trúng nút nhạc (xử lý riêng bên dưới)
     if (musicToggle.contains(e.target)) return;
     attemptPlay();
   }
 
-  // Gắn sự kiện cho cả Click chuột và Chạm (điện thoại)
   document.addEventListener('click', initAudio);
   document.addEventListener('touchstart', initAudio);
 
-  // Nút bật/tắt nhạc thủ công
   musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Ngăn sự kiện click lan ra body
-    
+    e.stopPropagation(); 
     if (bgMusic.paused) {
-      // Đang tắt -> Bật
       isMutedByUser = false;
       bgMusic.play().then(() => {
         musicIcon.textContent = '🎵';
         musicToggle.classList.add('playing');
       });
     } else {
-      // Đang bật -> Tắt
       isMutedByUser = true;
       bgMusic.pause();
       musicIcon.textContent = '🔇';
       musicToggle.classList.remove('playing');
     }
   });
-  // ==============================================================
 
   // ================= RENDER SCRIPT =================
   function renderScripts() {
@@ -457,7 +452,6 @@
       card.className = 'card';
       card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
       
-      // Đã xóa thẻ span Verified
       card.innerHTML = `
         <div class="card-image">
           <img src="${s.image}" alt="${s.name}">
