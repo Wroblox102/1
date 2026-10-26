@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* LIGHT MODE (Trắng nhiều, đen ít) */
     --bg: #f3f4f6; 
     --bg-2: #ffffff; 
     --surface: #ffffff;
@@ -231,13 +230,6 @@
     font-size: 11px; font-weight: 700; color: var(--accent);
     text-transform: uppercase; letter-spacing: 1px;
   }
-  .verified {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 4px 10px; background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;
-    font-size: 10px; font-weight: 700; color: #059669;
-    flex-shrink: 0; text-transform: uppercase;
-  }
   .card-desc {
     font-size: 14px; color: var(--text-dim); line-height: 1.5;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -309,12 +301,13 @@
 </head>
 <body>
 
-<!-- NHẠC NỀN -->
-<audio id="bgMusic" loop>
+<!-- ĐÃ THÊM playsinline CHO ĐIỆN THOẠI -->
+<audio id="bgMusic" loop playsinline preload="auto">
   <source src="nhac.mp3" type="audio/mpeg">
 </audio>
+
 <button class="music-btn" id="musicToggle" title="Bật/Tắt nhạc">
-  <span id="musicIcon">🎵</span>
+  <span id="musicIcon">🔇</span>
 </button>
 
 <nav>
@@ -351,26 +344,27 @@
 
 <script>
   // ================= DỮ LIỆU SCRIPT =================
+  // Đã xóa trường "verified"
   const defaultImage = "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png"; 
 
   const scripts = [
     {
-      id: 1, name: "Speed Hack Pro", category: "speed", verified: true,
+      id: 1, name: "Speed Hack Pro", category: "speed",
       desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
-      id: 2, name: "Mega Jump", category: "jump", verified: true,
+      id: 2, name: "Mega Jump", category: "jump",
       desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
-      id: 3, name: "Advanced ESP", category: "esp", verified: true,
+      id: 3, name: "Advanced ESP", category: "esp",
       desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
-      id: 4, name: "Auto Farm Ultimate", category: "auto", verified: true,
+      id: 4, name: "Auto Farm Ultimate", category: "auto",
       desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     }
@@ -381,65 +375,60 @@
   const suggestionsBox = document.getElementById('suggestions');
   let currentSearch = '';
 
-  // ================= XỬ LÝ NHẠC NỀN (LOGIC MỚI) =================
+  // ================= XỬ LÝ NHẠC NỀN (TỐI ƯU CHO MOBILE) =================
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
   const musicIcon = document.getElementById('musicIcon');
   
-  let isMusicPlaying = false;
-  let isMutedByUser = false; // Biến quan trọng: Đánh dấu người dùng đã chủ động tắt nhạc
+  let isMutedByUser = false; // Trạng thái người dùng chủ động tắt
 
   bgMusic.volume = 0.4; 
 
-  function playMusic() {
-    // Nếu người dùng đã chủ động tắt (isMutedByUser = true) thì không làm gì cả
-    if (isMutedByUser) return;
+  // Hàm thử phát nhạc
+  function attemptPlay() {
+    if (isMutedByUser) return; // Nếu đã chủ động tắt thì không phát
 
-    const playPromise = bgMusic.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        // Phát thành công
-        isMusicPlaying = true;
-        musicIcon.textContent = '🎵';
-        musicToggle.classList.add('playing');
-      }).catch(() => {
-        // Bị trình duyệt chặn
-        isMusicPlaying = false;
-        musicIcon.textContent = '🔇';
-        musicToggle.classList.remove('playing');
-      });
-    }
-  }
-
-  // 1. Cố gắng phát ngay khi load (thường sẽ bị chặn)
-  playMusic();
-
-  // 2. Bấm vào BẤT KỲ ĐÂU trên màn hình
-  document.addEventListener('click', () => {
-    // Nếu nhạc CHƯA phát VÀ người dùng CHƯA chủ động tắt -> Thử phát nhạc
-    if (!isMusicPlaying && !isMutedByUser) {
-      playMusic();
-    }
-  });
-
-  // 3. Nút Tắt / Mở Nhạc
-  musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài màn hình (tránh kích hoạt tự động phát)
-    
-    if (isMusicPlaying) {
-      // Đang phát -> Bấm vào để TẮT
-      bgMusic.pause();
-      isMusicPlaying = false;
-      isMutedByUser = true; // Đánh dấu: Người dùng đã tắt, không được tự phát nữa
-      musicIcon.textContent = '🔇';
-      musicToggle.classList.remove('playing');
-    } else {
-      // Đang tắt -> Bấm vào để BẬT
-      bgMusic.play();
-      isMusicPlaying = true;
-      isMutedByUser = false; // Bỏ đánh dấu tắt
+    bgMusic.play().then(() => {
+      // Phát thành công
       musicIcon.textContent = '🎵';
       musicToggle.classList.add('playing');
+      // Xóa sự kiện bắt click/touch đầu tiên vì đã phát được rồi
+      document.removeEventListener('click', initAudio);
+      document.removeEventListener('touchstart', initAudio);
+    }).catch((error) => {
+      // Trình duyệt chặn (thường là do chưa tương tác)
+      console.log("Chờ người dùng tương tác để phát nhạc...");
+    });
+  }
+
+  // Sự kiện bắt lần chạm/click đầu tiên
+  function initAudio(e) {
+    // Bỏ qua nếu click trúng nút nhạc (xử lý riêng bên dưới)
+    if (musicToggle.contains(e.target)) return;
+    attemptPlay();
+  }
+
+  // Gắn sự kiện cho cả Click chuột và Chạm (điện thoại)
+  document.addEventListener('click', initAudio);
+  document.addEventListener('touchstart', initAudio);
+
+  // Nút bật/tắt nhạc thủ công
+  musicToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // Ngăn sự kiện click lan ra body
+    
+    if (bgMusic.paused) {
+      // Đang tắt -> Bật
+      isMutedByUser = false;
+      bgMusic.play().then(() => {
+        musicIcon.textContent = '🎵';
+        musicToggle.classList.add('playing');
+      });
+    } else {
+      // Đang bật -> Tắt
+      isMutedByUser = true;
+      bgMusic.pause();
+      musicIcon.textContent = '🔇';
+      musicToggle.classList.remove('playing');
     }
   });
   // ==============================================================
@@ -468,6 +457,7 @@
       card.className = 'card';
       card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
       
+      // Đã xóa thẻ span Verified
       card.innerHTML = `
         <div class="card-image">
           <img src="${s.image}" alt="${s.name}">
@@ -478,7 +468,6 @@
               <div class="card-title">${s.name}</div>
               <div class="card-category">${s.category.toUpperCase()}</div>
             </div>
-            ${s.verified ? '<span class="verified">✓ Verified</span>' : ''}
           </div>
           <p class="card-desc">${s.desc}</p>
           <div class="card-actions">
