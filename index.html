@@ -35,7 +35,6 @@
 
   html { scroll-behavior: smooth; }
 
-  /* NỀN GRADIENT TĨNH CỰC NHẸ - KHÔNG GÂY LAG */
   body {
     background-color: var(--bg);
     background-image: 
@@ -75,7 +74,6 @@
     font-size: 20px; color: white;
     position: relative;
   }
-  /* Hiệu ứng pulse dùng opacity thay vì box-shadow để mượt hơn */
   .logo-icon::after {
     content: '';
     position: absolute;
@@ -99,7 +97,7 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* AVATAR */
+  /* AVATAR TRÊN NAV */
   .user-profile { display: flex; align-items: center; gap: 12px; }
   .avatar-container {
     position: relative; width: 42px; height: 42px;
@@ -117,37 +115,55 @@
     border: 2px solid #ffffff; border-radius: 50%; box-shadow: 0 0 8px var(--success);
   }
 
-  /* HERO */
-  .hero {
-    max-width: 1200px; margin: 0 auto;
-    padding: 60px 40px 30px; text-align: center;
+  /* HUB PROFILE HEADER (PHẦN ĐẦU TRANG MỚI) */
+  .hub-header {
+    max-width: 1300px; margin: 0 auto;
+    padding: 50px 40px 30px; 
+    display: flex; align-items: center; gap: 24px;
+    flex-wrap: wrap;
   }
-  .hero h1 {
-    font-size: clamp(38px, 6vw, 60px); font-weight: 900;
-    line-height: 1.05; letter-spacing: -2px; margin-bottom: 20px;
+  
+  .hub-avatar {
+    width: 100px; height: 100px;
+    border-radius: 50%; padding: 3px;
+    background: var(--gradient);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+    flex-shrink: 0;
   }
-  .hero h1 .gradient {
+  .hub-avatar img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+    border: 3px solid #ffffff;
+  }
+
+  .hub-info h1 {
+    font-size: 36px; font-weight: 900; letter-spacing: -1px;
+    margin-bottom: 8px; color: var(--text);
+  }
+  .hub-info h1 span {
     background: var(--gradient); -webkit-background-clip: text;
     background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .hero p { font-size: 17px; color: var(--text-dim); max-width: 600px; margin: 0 auto; line-height: 1.6; }
+  .hub-info p {
+    font-size: 15px; color: var(--text-dim); line-height: 1.5; max-width: 600px;
+  }
 
   /* SEARCH & SUGGESTIONS */
   .search-section {
-    max-width: 700px; margin: 30px auto 50px; padding: 0 40px; position: relative;
-    z-index: 90; /* Đảm bảo dropdown đè lên card */
+    max-width: 1300px; margin: 0 auto 30px; padding: 0 40px; position: relative;
+    z-index: 90; 
   }
   .search-wrapper {
     position: relative; background: var(--bg-2);
     border: 1px solid var(--border); border-radius: 16px;
     padding: 4px; transition: border-color 0.3s, box-shadow 0.3s; 
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 600px; /* Thu gọn thanh tìm kiếm cho đẹp */
   }
   .search-wrapper:focus-within {
     border-color: var(--border-hover); box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
   }
   .search-wrapper input {
-    width: 100%; padding: 16px 60px 16px 20px;
+    width: 100%; padding: 14px 50px 14px 20px;
     background: transparent; border: none; outline: none;
     color: var(--text); font-size: 15px; font-family: inherit;
   }
@@ -157,22 +173,18 @@
     color: var(--text-mute); font-size: 18px; pointer-events: none;
   }
 
-  /* DROPDOWN GỢI Ý MƯỢT HƠN */
+  /* DROPDOWN GỢI Ý */
   .suggestions {
-    position: absolute; top: 100%; left: 40px; right: 40px;
+    position: absolute; top: 100%; left: 40px; width: 600px; max-width: calc(100% - 80px);
     background: var(--bg-2); border: 1px solid var(--border);
     border-radius: 12px; margin-top: 8px;
     max-height: 250px; overflow-y: auto; z-index: 90;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    
-    /* Hiệu ứng hiện/ẩn mượt */
     opacity: 0; visibility: hidden;
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   }
-  .suggestions.show { 
-    opacity: 1; visibility: visible; transform: translateY(0);
-  }
+  .suggestions.show { opacity: 1; visibility: visible; transform: translateY(0); }
   .suggestion-item {
     padding: 14px 20px; cursor: pointer; display: flex; align-items: center; gap: 12px;
     border-bottom: 1px solid var(--border); transition: background-color 0.2s;
@@ -183,7 +195,7 @@
   .suggestion-item span { font-size: 14px; font-weight: 600; color: var(--text); }
   .suggestion-item small { color: var(--text-mute); font-size: 12px; margin-left: auto; }
 
-  /* GRID - 2 CỘT MẶC ĐỊNH */
+  /* GRID */
   .scripts-grid {
     max-width: 1300px; margin: 0 auto; padding: 0 40px 80px;
     display: grid;
@@ -191,18 +203,16 @@
     gap: 24px;
   }
 
-  /* CARD MƯỢT HƠN */
+  /* CARD */
   .card {
     background: var(--bg-2); 
     border: 1px solid var(--border);
     border-radius: 20px; padding: 0; position: relative;
     display: flex; flex-direction: column;
-    /* Tối ưu animation: Chỉ dùng transform và border-color */
     transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease;
     will-change: transform;
   }
   
-  /* Bóng đổ cho card dùng lớp giả, thay đổi opacity để không lag */
   .card::before {
     content: '';
     position: absolute;
@@ -221,9 +231,9 @@
   }
   .card:hover::before { opacity: 1; }
 
-  /* ẢNH SCRIPT */
+  /* ẢNH SCRIPT (Thu nhỏ lại thành Thumbnail) */
   .card-image {
-    width: 100%; height: 160px; background: #f1f5f9; overflow: hidden; position: relative;
+    width: 100%; height: 140px; background: #f1f5f9; overflow: hidden; position: relative;
     border-bottom: 1px solid var(--border);
     border-radius: 19px 19px 0 0;
   }
@@ -235,7 +245,7 @@
 
   /* NỘI DUNG CARD */
   .card-content {
-    padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;
+    padding: 20px; display: flex; flex-direction: column; gap: 16px; flex: 1;
   }
   .card-header {
     display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
@@ -245,11 +255,6 @@
   .card-category {
     font-size: 11px; font-weight: 700; color: var(--accent);
     text-transform: uppercase; letter-spacing: 1px;
-  }
-  .card-desc {
-    font-size: 14px; color: var(--text-dim); line-height: 1.5;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    margin-bottom: 8px;
   }
   
   /* NÚT LINK CHÍNH / PHỤ */
@@ -304,31 +309,31 @@
   @media (max-width: 768px) {
     nav { 
       padding: 14px 20px; 
-      /* Tắt blur trên mobile để vuốt mượt hơn */
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
       background: rgba(255, 255, 255, 0.98);
     }
-    .hero { padding: 40px 20px 20px; }
-    .search-section { padding: 0 20px; }
-    .suggestions { left: 20px; right: 20px; }
-    
-    .scripts-grid { 
-      padding: 0 15px 60px; 
-      gap: 12px; 
+    .hub-header {
+      padding: 30px 20px 20px;
+      flex-direction: column; text-align: center; gap: 16px;
     }
+    .hub-avatar { width: 80px; height: 80px; }
+    .hub-info h1 { font-size: 28px; }
+    
+    .search-section { padding: 0 20px; }
+    .search-wrapper { max-width: 100%; }
+    .suggestions { left: 20px; right: 20px; width: auto; max-width: none; }
+    
+    .scripts-grid { padding: 0 15px 60px; gap: 12px; }
     
     .card { border-radius: 14px; }
     .card::before { border-radius: 14px; }
     
-    .card-image { 
-      height: 100px; 
-      border-radius: 13px 13px 0 0;
-    }
-    .card-content { padding: 12px; gap: 8px; }
+    .card-image { height: 100px; border-radius: 13px 13px 0 0; }
+    .card-content { padding: 12px; gap: 10px; }
+    
     .card-title { font-size: 14px; }
     .card-category { font-size: 9px; }
-    .card-desc { font-size: 11px; margin-bottom: 4px; }
     
     .card-actions { flex-direction: column; gap: 6px; }
     .btn { padding: 8px; font-size: 11px; border-radius: 8px; }
@@ -361,14 +366,20 @@
   </div>
 </nav>
 
-<section class="hero">
-  <h1>Thư viện <span class="gradient">Script Roblox</span><br>Chất lượng cao</h1>
-  <p>Khám phá, tải xuống và chia sẻ các script Roblox tốt nhất từ cộng đồng. Cập nhật hàng ngày, miễn phí 100%.</p>
+<!-- PHẦN HEADER HUB MỚI -->
+<section class="hub-header">
+  <div class="hub-avatar">
+    <img src="https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png" alt="W Roblox Hub">
+  </div>
+  <div class="hub-info">
+    <h1><span>W Roblox</span> Hub</h1>
+    <p>Tổng hợp các Script Roblox chất lượng cao, hoạt động tốt nhất. Cập nhật liên tục và hoàn toàn miễn phí dành cho cộng đồng.</p>
+  </div>
 </section>
 
 <div class="search-section">
   <div class="search-wrapper">
-    <input type="text" id="searchInput" placeholder="Tìm Script..." autocomplete="off">
+    <input type="text" id="searchInput" placeholder="Tìm tên Script..." autocomplete="off">
     <span class="search-icon">🔍</span>
   </div>
   <div class="suggestions" id="suggestions"></div>
@@ -383,32 +394,26 @@
   const scripts = [
     {
       id: 1, name: "Speed Hack Pro", category: "speed",
-      desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 2, name: "Mega Jump", category: "jump",
-      desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 3, name: "Advanced ESP", category: "esp",
-      desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 4, name: "Auto Farm Ultimate", category: "auto",
-      desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 5, name: "Fly V3", category: "tool",
-      desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 6, name: "Infinite Yield", category: "tool",
-      desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
       image: defaultImage, linkMain: "#", linkSub: "#"
     }
   ];
@@ -465,8 +470,7 @@
   // ================= RENDER SCRIPT =================
   function renderScripts() {
     const filtered = scripts.filter(s => {
-      return s.name.toLowerCase().includes(currentSearch) ||
-             s.desc.toLowerCase().includes(currentSearch);
+      return s.name.toLowerCase().includes(currentSearch);
     });
 
     grid.innerHTML = '';
@@ -484,7 +488,6 @@
     filtered.forEach((s, idx) => {
       const card = document.createElement('div');
       card.className = 'card';
-      // Sử dụng translate3d để kích hoạt tăng tốc phần cứng (Hardware Acceleration)
       card.style.animation = `fadeIn 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) ${idx * 0.05}s backwards`;
       
       card.innerHTML = `
@@ -498,7 +501,6 @@
               <div class="card-category">${s.category.toUpperCase()}</div>
             </div>
           </div>
-          <p class="card-desc">${s.desc}</p>
           <div class="card-actions">
             <a href="${s.linkMain}" target="_blank" class="btn btn-main">🔗 Link Chính</a>
             <a href="${s.linkSub}" target="_blank" class="btn btn-sub">📁 Link Phụ</a>
@@ -557,7 +559,6 @@
     }
   });
 
-  // Keyframe dùng translate3d (tăng tốc phần cứng) thay vì translateY thông thường
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeIn {
