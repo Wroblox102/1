@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Script Hub - Chia Sẻ Script Miễn Phí</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+  }
+
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #1f6feb 0%, #6e40c9 100%);
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    box-shadow: 0 4px 20px rgba(31, 111, 235, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  header h1::before {
+    content: "🎮";
+    font-size: 28px;
+  }
+
+  .search-box {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px 45px 12px 18px;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  .search-box input::placeholder { color: rgba(255,255,255,0.7); }
+  .search-box input:focus {
+    background: rgba(255,255,255,0.2);
+    border-color: white;
+  }
+
+  .search-box::after {
+    content: "🔍";
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* CATEGORY FILTER */
+  .categories {
+    display: flex;
+    gap: 10px;
+    padding: 20px 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+  }
+
+  .cat-btn {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 1px solid #30363d;
+    background: #21262d;
+    color: #e6edf3;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+  }
+
+  .cat-btn:hover {
+    background: #30363d;
+    transform: translateY(-2px);
+  }
+
+  .cat-btn.active {
+    background: linear-gradient(135deg, #1f6feb, #6e40c9);
+    border-color: transparent;
+    font-weight: bold;
+  }
+
+  /* GRID SCRIPTS */
+  .scripts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .script-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .script-card:hover {
+    transform: translateY(-5px);
+    border-color: #1f6feb;
+    box-shadow: 0 10px 30px rgba(31, 111, 235, 0.2);
+  }
+
+  .script-card h3 {
+    font-size: 18px;
+    color: #58a6ff;
+  }
+
+  .script-card .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #21262d;
+    border-radius: 12px;
+    font-size: 11px;
+    color: #8b949e;
+    align-self: flex-start;
+  }
+
+  .script-card p {
+    color: #8b949e;
+    font-size: 14px;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .script-card pre {
+    background: #0d1117;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #1f6feb;
+    font-size: 12px;
+    max-height: 100px;
+    overflow: auto;
+    color: #79c0ff;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: 0.3s;
+  }
+
+  .btn-copy {
+    background: linear-gradient(135deg, #238636, #2ea043);
+    color: white;
+  }
+
+  .btn-copy:hover {
+    filter: brightness(1.15);
+    transform: scale(1.03);
+  }
+
+  .btn-copy.copied {
+    background: linear-gradient(135deg, #1f6feb, #6e40c9);
+  }
+
+  /* EMPTY STATE */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #8b949e;
+    grid-column: 1 / -1;
+    font-size: 16px;
+  }
+
+  .empty::before {
+    content: "😕";
+    display: block;
+    font-size: 60px;
+    margin-bottom: 15px;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 25px;
+    color: #8b949e;
+    font-size: 13px;
+    border-top: 1px solid #30363d;
+    margin-top: 30px;
+  }
+
+  footer a { color: #58a6ff; text-decoration: none; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #238636;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(35, 134, 54, 0.5);
+    font-weight: 600;
+    transform: translateX(400px);
+    transition: 0.4s;
+    z-index: 999;
+  }
+
+  .toast.show { transform: translateX(0); }
+
+  @media (max-width: 600px) {
+    header { padding: 15px; }
+    header h1 { font-size: 20px; }
+    .scripts-grid { padding: 15px; grid-template-columns: 1fr; }
+    .categories { padding: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Roblox Script Hub</h1>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Tìm script...">
+  </div>
+</header>
+
+<div class="categories" id="categories">
+  <button class="cat-btn active" data-cat="all">Tất cả</button>
+  <button class="cat-btn" data-cat="speed">Speed</button>
+  <button class="cat-btn" data-cat="jump">Jump</button>
+  <button class="cat-btn" data-cat="esp">ESP</button>
+  <button class="cat-btn" data-cat="auto">Auto Farm</button>
+  <button class="cat-btn" data-cat="tool">Tool</button>
+</div>
+
+<main class="scripts-grid" id="scriptsGrid"></main>
+
+<footer>
+  © 2025 Roblox Script Hub - Chia sẻ vì cộng đồng ❤️<br>
+  <small>Lưu ý: Chỉ sử dụng cho mục đích học tập. Tôn trọng Roblox ToS.</small>
+</footer>
+
+<div class="toast" id="toast">✅ Đã copy script!</div>
+
+<script>
+  // ===== DANH SÁCH SCRIPT (bạn có thể thêm/sửa tùy ý) =====
+  const scripts = [
+    {
+      id: 1,
+      name: "Speed Hack",
+      category: "speed",
+      desc: "Tăng tốc độ di chuyển của nhân vật lên gấp nhiều lần.",
+      code: `local player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nchar.Humanoid.WalkSpeed = 100`
+    },
+    {
+      id: 2,
+      name: "Jump Power Max",
+      category: "jump",
+      desc: "Tăng lực nhảy cực cao cho nhân vật.",
+      code: `local player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nchar.Humanoid.JumpPower = 200`
+    },
+    {
+      id: 3,
+      name: "ESP Player",
+      category: "esp",
+      desc: "Hiển thị tên và vị trí của tất cả người chơi qua tường.",
+      code: `for _, p in pairs(game.Players:GetPlayers()) do\n    if p ~= game.Players.LocalPlayer then\n        local hl = Instance.new("Highlight")\n        hl.Parent = p.Character\n        hl.FillColor = Color3.fromRGB(255,0,0)\n    end\nend`
+    },
+    {
+      id: 4,
+      name: "Auto Farm Coins",
+      category: "auto",
+      desc: "Tự động thu thập coin trong nhiều game simulator.",
+      code: `while true do\n    for _, v in pairs(game.Workspace:GetDescendants()) do\n        if v.Name == "Coin" then\n            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame\n        end\n    end\n    task.wait(0.1)\nend`
+    },
+    {
+      id: 5,
+      name: "Fly Script",
+      category: "tool",
+      desc: "Cho phép nhân vật bay lượn tự do trên không.",
+      code: `local player = game.Players.LocalPlayer\nlocal hrp = player.Character.HumanoidRootPart\nlocal bp = Instance.new("BodyPosition")\nbp.Parent = hrp\nbp.MaxForce = Vector3.new(1e6,1e6,1e6)\nbp.Position = hrp.Position`
+    },
+    {
+      id: 6,
+      name: "Infinite Yield",
+      category: "tool",
+      desc: "Admin script phổ biến với hơn 200 lệnh tiện ích.",
+      code: `loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()`
+    },
+    {
+      id: 7,
+      name: "Noclip",
+      category: "tool",
+      desc: "Xuyên qua mọi vật thể trong game (bỏ qua va chạm).",
+      code: `local player = game.Players.LocalPlayer\nplayer.Character.HumanoidRootPart.CanCollide = false\nfor _, v in pairs(player.Character:GetDescendants()) do\n    if v:IsA("BasePart") then v.CanCollide = false end\nend`
+    },
+    {
+      id: 8,
+      name: "Auto Clicker",
+      category: "auto",
+      desc: "Tự động click chuột liên tục cho các game clicker.",
+      code: `while true do\n    game:GetService("VirtualUser"):ClickButton1(Vector2.new())\n    task.wait(0.05)\nend`
+    }
+  ];
+
+  const grid = document.getElementById('scriptsGrid');
+  const searchInput = document.getElementById('searchInput');
+  const catBtns = document.querySelectorAll('.cat-btn');
+  const toast = document.getElementById('toast');
+
+  let currentCat = 'all';
+  let currentSearch = '';
+
+  // ===== RENDER =====
+  function renderScripts() {
+    const filtered = scripts.filter(s => {
+      const matchCat = currentCat === 'all' || s.category === currentCat;
+      const matchSearch = s.name.toLowerCase().includes(currentSearch) ||
+                          s.desc.toLowerCase().includes(currentSearch);
+      return matchCat && matchSearch;
+    });
+
+    grid.innerHTML = '';
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<div class="empty">Không tìm thấy script nào phù hợp</div>';
+      return;
+    }
+
+    filtered.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'script-card';
+      card.innerHTML = `
+        <span class="badge">#${s.category.toUpperCase()}</span>
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+        <pre>${escapeHtml(s.code)}</pre>
+        <div class="card-actions">
+          <button class="btn btn-copy" data-code="${escapeAttr(s.code)}">📋 Copy Script</button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Gắn sự kiện copy
+    document.querySelectorAll('.btn-copy').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const code = e.target.dataset.code;
+        copyToClipboard(decodeURIComponent(code), e.target);
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function escapeAttr(str) {
+    return encodeURIComponent(str);
+  }
+
+  // ===== COPY =====
+  function copyToClipboard(text, btn) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => showCopied(btn));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showCopied(btn);
+    }
+  }
+
+  function showCopied(btn) {
+    btn.textContent = '✅ Đã copy!';
+    btn.classList.add('copied');
+    toast.classList.add('show');
+    setTimeout(() => {
+      btn.textContent = '📋 Copy Script';
+      btn.classList.remove('copied');
+      toast.classList.remove('show');
+    }, 1500);
+  }
+
+  // ===== EVENTS =====
+  searchInput.addEventListener('input', e => {
+    currentSearch = e.target.value.toLowerCase().trim();
+    renderScripts();
+  });
+
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = btn.dataset.cat;
+      renderScripts();
+    });
+  });
+
+  // ===== INIT =====
+  renderScripts();
+</script>
+
+</body>
+</html>
