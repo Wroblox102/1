@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexusScripts — Roblox Script Hub</title>
+<title>W Roblox — Script Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -22,7 +22,6 @@
     --primary-2: #6366f1;
     --accent: #22d3ee;
     --success: #10b981;
-    --warning: #f59e0b;
     --gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #22d3ee 100%);
     --glow: 0 0 40px rgba(139, 92, 246, 0.4);
   }
@@ -112,62 +111,13 @@
     -webkit-text-fill-color: transparent;
   }
 
-  .nav-links {
-    display: flex; gap: 8px;
-  }
-  .nav-links a {
-    color: var(--text-dim);
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); background: var(--surface-2); }
-
-  .nav-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    background: var(--gradient);
-    color: white;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-  }
-  .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(139, 92, 246, 0.6); }
-
   /* HERO */
   .hero {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 40px 60px;
+    padding: 80px 40px 40px;
     text-align: center;
   }
-
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 8px 16px;
-    background: rgba(139, 92, 246, 0.1);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 100px;
-    font-size: 13px;
-    color: #c4b5fd;
-    margin-bottom: 24px;
-    font-weight: 500;
-  }
-  .hero-badge::before {
-    content: '';
-    width: 8px; height: 8px;
-    background: var(--success);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--success);
-    animation: blink 2s infinite;
-  }
-  @keyframes blink { 50% { opacity: 0.3; } }
 
   .hero h1 {
     font-size: clamp(38px, 6vw, 72px);
@@ -187,29 +137,14 @@
     font-size: 18px;
     color: var(--text-dim);
     max-width: 600px;
-    margin: 0 auto 40px;
+    margin: 0 auto;
     line-height: 1.6;
   }
-
-  .stats {
-    display: flex; justify-content: center; gap: 60px;
-    flex-wrap: wrap;
-    margin-top: 40px;
-  }
-  .stat { text-align: center; }
-  .stat-value {
-    font-size: 32px; font-weight: 800;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .stat-label { font-size: 13px; color: var(--text-mute); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
   /* SEARCH */
   .search-section {
     max-width: 700px;
-    margin: 0 auto 50px;
+    margin: 30px auto 50px;
     padding: 0 40px;
     position: relative;
   }
@@ -247,43 +182,6 @@
     color: var(--text-mute);
     font-size: 18px;
     pointer-events: none;
-  }
-
-  /* FILTERS */
-  .filters {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 40px 40px;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .filter-btn {
-    padding: 10px 22px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex; align-items: center; gap: 8px;
-    backdrop-filter: blur(10px);
-  }
-  .filter-btn:hover {
-    color: var(--text);
-    background: var(--surface-2);
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-  }
-  .filter-btn.active {
-    background: var(--gradient);
-    color: white;
-    border-color: transparent;
-    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
   }
 
   /* GRID */
@@ -572,12 +470,8 @@
   /* RESPONSIVE */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
-    .nav-links { display: none; }
-    .hero { padding: 60px 20px 40px; }
-    .stats { gap: 30px; }
-    .stat-value { font-size: 24px; }
+    .hero { padding: 60px 20px 20px; }
     .search-section { padding: 0 20px; }
-    .filters { padding: 0 20px 30px; }
     .scripts-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
     .modal-body { padding: 20px; }
   }
@@ -588,27 +482,13 @@
 <nav>
   <div class="logo">
     <div class="logo-icon">⚡</div>
-    <div class="logo-text">Nexus<span class="accent">Scripts</span></div>
+    <div class="logo-text">W <span class="accent">Roblox</span></div>
   </div>
-  <div class="nav-links">
-    <a href="#">Trang chủ</a>
-    <a href="#">Scripts</a>
-    <a href="#">Hướng dẫn</a>
-    <a href="#">Cộng đồng</a>
-  </div>
-  <button class="nav-btn">Đăng nhập</button>
 </nav>
 
 <section class="hero">
-  <div class="hero-badge">Hơn 5,000 scripts đang hoạt động</div>
   <h1>Thư viện <span class="gradient">Script Roblox</span><br>Chất lượng cao</h1>
   <p>Khám phá, tải xuống và chia sẻ các script Roblox tốt nhất từ cộng đồng. Cập nhật hàng ngày, miễn phí 100%.</p>
-
-  <div class="stats">
-    <div class="stat"><div class="stat-value">5,247</div><div class="stat-label">Scripts</div></div>
-    <div class="stat"><div class="stat-value">128K</div><div class="stat-label">Người dùng</div></div>
-    <div class="stat"><div class="stat-value">2.4M</div><div class="stat-label">Lượt tải</div></div>
-  </div>
 </section>
 
 <div class="search-section">
@@ -616,15 +496,6 @@
     <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng...">
     <span class="search-icon">🔍</span>
   </div>
-</div>
-
-<div class="filters" id="filters">
-  <button class="filter-btn active" data-cat="all">✨ Tất cả</button>
-  <button class="filter-btn" data-cat="speed">⚡ Speed</button>
-  <button class="filter-btn" data-cat="jump">🦘 Jump</button>
-  <button class="filter-btn" data-cat="esp">👁️ ESP</button>
-  <button class="filter-btn" data-cat="auto">🤖 Auto Farm</button>
-  <button class="filter-btn" data-cat="tool">🔧 Tool</button>
 </div>
 
 <main class="scripts-grid" id="grid"></main>
@@ -648,7 +519,7 @@
 <div class="toast" id="toast">✅ Đã sao chép script!</div>
 
 <footer>
-  Made with <span class="gradient">❤️</span> for the Roblox community · © 2025 NexusScripts<br>
+  Made with <span class="gradient">❤️</span> for the Roblox community · © 2025 W Roblox<br>
   <small style="opacity:0.6">Sử dụng có trách nhiệm · Tôn trọng Roblox ToS</small>
 </footer>
 
@@ -706,7 +577,6 @@
 
   const grid = document.getElementById('grid');
   const searchInput = document.getElementById('searchInput');
-  const filterBtns = document.querySelectorAll('.filter-btn');
   const toast = document.getElementById('toast');
   const modal = document.getElementById('modal');
   const modalTitle = document.getElementById('modalTitle');
@@ -714,17 +584,15 @@
   const modalCopy = document.getElementById('modalCopy');
   const modalClose = document.getElementById('modalClose');
 
-  let currentCat = 'all';
   let currentSearch = '';
   let activeScript = null;
 
   // ===== RENDER =====
   function render() {
+    // Chỉ còn tìm kiếm, không còn phân loại
     const filtered = scripts.filter(s => {
-      const matchCat = currentCat === 'all' || s.category === currentCat;
-      const matchSearch = s.name.toLowerCase().includes(currentSearch) ||
-                          s.desc.toLowerCase().includes(currentSearch);
-      return matchCat && matchSearch;
+      return s.name.toLowerCase().includes(currentSearch) ||
+             s.desc.toLowerCase().includes(currentSearch);
     });
 
     grid.innerHTML = '';
@@ -734,7 +602,7 @@
         <div class="empty">
           <div class="empty-icon">🔍</div>
           <h3>Không tìm thấy script</h3>
-          <p>Thử tìm với từ khóa khác hoặc chọn danh mục khác</p>
+          <p>Thử tìm với từ khóa khác</p>
         </div>`;
       return;
     }
@@ -835,15 +703,6 @@
   searchInput.addEventListener('input', e => {
     currentSearch = e.target.value.toLowerCase().trim();
     render();
-  });
-
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentCat = btn.dataset.cat;
-      render();
-    });
   });
 
   // ===== ANIMATION =====
