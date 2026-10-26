@@ -9,21 +9,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #08080f;
-    --bg-2: #0f0f1a;
-    --surface: rgba(255, 255, 255, 0.03);
-    --surface-2: rgba(255, 255, 255, 0.06);
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(139, 92, 246, 0.5);
-    --text: #f5f5fa;
-    --text-dim: #9ca3af;
-    --text-mute: #6b7280;
+    /* BẢNG MÀU MỚI (LIGHT MODE) */
+    --bg: #f3f4f6; /* Nền xám rất nhạt */
+    --bg-2: #ffffff; /* Nền trắng tinh cho các thẻ */
+    --surface: #ffffff;
+    --surface-2: #f9fafb;
+    --border: #e5e7eb; /* Viền xám nhạt */
+    --border-hover: #8b5cf6;
+    
+    --text: #111827; /* Chữ đen/xám đậm */
+    --text-dim: #4b5563;
+    --text-mute: #9ca3af;
+    
     --primary: #8b5cf6;
     --primary-2: #6366f1;
-    --accent: #22d3ee;
+    --accent: #0ea5e9; /* Xanh sáng hơn cho dễ đọc trên nền trắng */
     --success: #10b981;
+    
     --gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #22d3ee 100%);
-    --glow: 0 0 40px rgba(139, 92, 246, 0.4);
+    --glow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
 
   * {
@@ -42,7 +46,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Animated background orbs */
+  /* Hiệu ứng nền mờ (giảm độ đậm để hợp với nền sáng) */
   body::before, body::after {
     content: '';
     position: fixed;
@@ -50,7 +54,7 @@
     filter: blur(120px);
     z-index: -1;
     pointer-events: none;
-    opacity: 0.4;
+    opacity: 0.15; /* Giảm độ đậm */
   }
   body::before {
     width: 600px; height: 600px;
@@ -64,21 +68,15 @@
     bottom: -200px; right: -200px;
     animation: float2 25s ease-in-out infinite;
   }
-  @keyframes float1 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(200px, 150px) scale(1.2); }
-  }
-  @keyframes float2 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-150px, -100px) scale(1.3); }
-  }
+  @keyframes float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(200px, 150px) scale(1.2); } }
+  @keyframes float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-150px, -100px) scale(1.3); } }
 
   /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     backdrop-filter: blur(20px) saturate(150%);
     -webkit-backdrop-filter: blur(20px) saturate(150%);
-    background: rgba(8, 8, 15, 0.7);
+    background: rgba(255, 255, 255, 0.85);
     border-bottom: 1px solid var(--border);
     padding: 16px 40px;
     display: flex; align-items: center; justify-content: space-between;
@@ -95,13 +93,13 @@
     background: var(--gradient);
     border-radius: 12px;
     display: grid; place-items: center;
-    font-size: 20px;
+    font-size: 20px; color: white;
     box-shadow: var(--glow);
     animation: pulse 3s ease-in-out infinite;
   }
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
-    50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+    0%, 100% { box-shadow: 0 0 10px rgba(139, 92, 246, 0.3); }
+    50% { box-shadow: 0 0 25px rgba(139, 92, 246, 0.6); }
   }
 
   .logo-text .accent {
@@ -117,15 +115,15 @@
     position: relative; width: 42px; height: 42px;
     border-radius: 50%; padding: 2px;
     background: var(--gradient);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
     transition: 0.3s ease; cursor: pointer;
   }
-  .avatar-container:hover { transform: scale(1.08); box-shadow: 0 0 25px rgba(139, 92, 246, 0.8); }
-  .user-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); display: block; }
+  .avatar-container:hover { transform: scale(1.08); box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); }
+  .user-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff; display: block; }
   .status-dot {
     position: absolute; bottom: 1px; right: 1px;
     width: 10px; height: 10px; background-color: var(--success);
-    border: 2px solid var(--bg); border-radius: 50%; box-shadow: 0 0 8px var(--success);
+    border: 2px solid #ffffff; border-radius: 50%; box-shadow: 0 0 8px var(--success);
   }
 
   /* HERO */
@@ -148,12 +146,12 @@
     max-width: 700px; margin: 30px auto 50px; padding: 0 40px; position: relative;
   }
   .search-wrapper {
-    position: relative; background: var(--surface);
+    position: relative; background: var(--bg-2);
     border: 1px solid var(--border); border-radius: 16px;
-    padding: 4px; transition: 0.3s; backdrop-filter: blur(10px);
+    padding: 4px; transition: 0.3s; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   }
   .search-wrapper:focus-within {
-    border-color: var(--border-hover); box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+    border-color: var(--border-hover); box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
   }
   .search-wrapper input {
     width: 100%; padding: 16px 60px 16px 20px;
@@ -166,13 +164,13 @@
     color: var(--text-mute); font-size: 18px; pointer-events: none;
   }
 
-  /* DROPDOWN GỢI Ý TÌM KIẾM */
+  /* DROPDOWN GỢI Ý */
   .suggestions {
     position: absolute; top: 100%; left: 40px; right: 40px;
     background: var(--bg-2); border: 1px solid var(--border);
     border-radius: 12px; margin-top: 8px;
     max-height: 250px; overflow-y: auto; display: none; z-index: 90;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   }
   .suggestions.show { display: block; }
   .suggestion-item {
@@ -187,29 +185,33 @@
   .suggestion-item span { font-size: 14px; font-weight: 600; color: var(--text); }
   .suggestion-item small { color: var(--text-mute); font-size: 12px; margin-left: auto; }
 
-  /* GRID - CHIA LÀM 2 CỘT */
+  /* GRID - 2 CỘT */
   .scripts-grid {
     max-width: 1300px; margin: 0 auto; padding: 0 40px 80px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 cột */
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 
   /* CARD */
   .card {
-    background: var(--surface); border: 1px solid var(--border);
+    background: var(--bg-2); 
+    border: 1px solid var(--border);
     border-radius: 20px; padding: 0; position: relative;
-    overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px); display: flex; flex-direction: column;
+    overflow: hidden; transition: 0.3s ease-in-out;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    display: flex; flex-direction: column;
   }
   .card:hover {
-    transform: translateY(-5px); border-color: var(--border-hover);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    transform: translateY(-4px); 
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 
   /* ẢNH SCRIPT */
   .card-image {
-    width: 100%; height: 160px; background: #1a1a2e; overflow: hidden; position: relative;
+    width: 100%; height: 160px; background: #f1f5f9; overflow: hidden; position: relative;
+    border-bottom: 1px solid var(--border);
   }
   .card-image img {
     width: 100%; height: 100%; object-fit: cover; transition: 0.4s;
@@ -233,36 +235,33 @@
     display: inline-flex; align-items: center; gap: 4px;
     padding: 4px 10px; background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px;
-    font-size: 10px; font-weight: 700; color: var(--success);
+    font-size: 10px; font-weight: 700; color: #059669;
     flex-shrink: 0; text-transform: uppercase;
   }
   .card-desc {
     font-size: 14px; color: var(--text-dim); line-height: 1.5;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
-  .card-meta {
-    display: flex; gap: 16px; font-size: 12px; color: var(--text-mute);
-    padding-top: 12px; border-top: 1px solid var(--border);
+    margin-bottom: 8px;
   }
   
   /* NÚT LINK CHÍNH / PHỤ */
   .card-actions { display: flex; gap: 10px; margin-top: auto; }
   .btn {
-    flex: 1; padding: 12px; border-radius: 12px; border: none;
+    flex: 1; padding: 12px; border-radius: 12px; border: 1px solid transparent;
     font-size: 14px; font-weight: 700; font-family: inherit;
     cursor: pointer; transition: 0.3s; text-decoration: none;
     display: flex; align-items: center; justify-content: center; gap: 6px;
   }
   .btn-main {
     background: var(--gradient); color: white;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 10px rgba(139, 92, 246, 0.25);
   }
-  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5); }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(139, 92, 246, 0.4); }
   
   .btn-sub {
     background: var(--surface-2); border: 1px solid var(--border); color: var(--text);
   }
-  .btn-sub:hover { border-color: var(--border-hover); background: rgba(139, 92, 246, 0.1); }
+  .btn-sub:hover { border-color: var(--border-hover); background: #f3f4f6; color: var(--primary); }
 
   /* EMPTY */
   .empty {
@@ -274,15 +273,15 @@
   .music-btn {
     position: fixed; bottom: 30px; right: 30px;
     width: 50px; height: 50px; border-radius: 50%;
-    background: var(--surface-2); border: 1px solid var(--border);
+    background: var(--bg-2); border: 1px solid var(--border);
     color: var(--text); font-size: 22px; cursor: pointer;
     display: grid; place-items: center; z-index: 1000;
-    backdrop-filter: blur(10px); transition: 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
   }
-  .music-btn:hover { transform: scale(1.1); border-color: var(--border-hover); }
+  .music-btn:hover { transform: scale(1.1); border-color: var(--border-hover); color: var(--primary); }
   .music-btn.playing {
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6); border-color: var(--primary);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); border-color: var(--primary); color: var(--primary);
     animation: rotateMusic 4s linear infinite;
   }
   @keyframes rotateMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -291,11 +290,12 @@
   footer {
     border-top: 1px solid var(--border); padding: 30px;
     text-align: center; color: var(--text-mute); font-size: 14px;
+    background: var(--bg-2);
   }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
-    .scripts-grid { grid-template-columns: 1fr; } /* Về 1 cột trên mobile */
+    .scripts-grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
@@ -352,22 +352,19 @@
 
 <script>
   // ================= DỮ LIỆU SCRIPT =================
-  // Bạn có thể sửa "image", "linkMain", "linkSub" cho từng script ở đây
-  const defaultImage = "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png"; // Ảnh mặc định (Avatar của bạn)
+  const defaultImage = "https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png"; 
 
   const scripts = [
     {
       id: 1, name: "Speed Hack Pro", category: "speed", verified: true,
       desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
-      views: "42.5K", rating: 4.9,
-      image: defaultImage, // Thay link ảnh riêng vào đây
-      linkMain: "https://example.com/main1", // Thay link chính vào đây
-      linkSub: "https://example.com/sub1"    // Thay link phụ vào đây
+      image: defaultImage, 
+      linkMain: "https://example.com/main1", 
+      linkSub: "https://example.com/sub1"    
     },
     {
       id: 2, name: "Mega Jump", category: "jump", verified: true,
       desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
-      views: "28.1K", rating: 4.7,
       image: defaultImage,
       linkMain: "https://example.com/main2",
       linkSub: "https://example.com/sub2"
@@ -375,7 +372,6 @@
     {
       id: 3, name: "Advanced ESP", category: "esp", verified: true,
       desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
-      views: "61.2K", rating: 5.0,
       image: defaultImage,
       linkMain: "https://example.com/main3",
       linkSub: "https://example.com/sub3"
@@ -383,7 +379,6 @@
     {
       id: 4, name: "Auto Farm Ultimate", category: "auto", verified: true,
       desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
-      views: "89.4K", rating: 4.8,
       image: defaultImage,
       linkMain: "https://example.com/main4",
       linkSub: "https://example.com/sub4"
@@ -391,7 +386,6 @@
     {
       id: 5, name: "Fly V3", category: "tool", verified: false,
       desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
-      views: "35.7K", rating: 4.5,
       image: defaultImage,
       linkMain: "https://example.com/main5",
       linkSub: "https://example.com/sub5"
@@ -399,7 +393,6 @@
     {
       id: 6, name: "Infinite Yield", category: "tool", verified: true,
       desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
-      views: "152K", rating: 5.0,
       image: defaultImage,
       linkMain: "https://example.com/main6",
       linkSub: "https://example.com/sub6"
@@ -437,11 +430,13 @@
 
   playMusic();
 
+  // Bấm vào màn hình bất kỳ đâu để phát nhạc nếu bị trình duyệt chặn
   document.addEventListener('click', function initAudio() {
     if (!isMusicPlaying) playMusic();
     document.removeEventListener('click', initAudio);
   }, { once: true });
 
+  // Nút tắt/mở nhạc
   musicToggle.addEventListener('click', (e) => {
     e.stopPropagation();
     if (isMusicPlaying) {
@@ -480,8 +475,9 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
+      
+      // Đã xóa phần hiển thị View (con mắt) và Rating (ngôi sao) tại đây
       card.innerHTML = `
-        <!-- KHUNG ẢNH -->
         <div class="card-image">
           <img src="${s.image}" alt="${s.name}">
         </div>
@@ -497,12 +493,7 @@
           
           <p class="card-desc">${s.desc}</p>
           
-          <div class="card-meta">
-            <span>👁 ${s.views}</span>
-            <span>⭐ ${s.rating}</span>
-          </div>
-          
-          <!-- NÚT LINK CHÍNH / PHỤ -->
+          <!-- NÚT LINK -->
           <div class="card-actions">
             <a href="${s.linkMain}" target="_blank" class="btn btn-main">🔗 Link Chính</a>
             <a href="${s.linkSub}" target="_blank" class="btn btn-sub">📁 Link Phụ</a>
@@ -518,10 +509,8 @@
     const val = e.target.value.toLowerCase().trim();
     currentSearch = val;
     
-    // Cập nhật lưới script
     renderScripts();
 
-    // Xử lý bảng gợi ý
     suggestionsBox.innerHTML = '';
     if (val.length > 0) {
       const matches = scripts.filter(s => s.name.toLowerCase().includes(val));
@@ -535,7 +524,6 @@
             <span>${m.name}</span>
             <small>${m.category}</small>
           `;
-          // Khi bấm vào gợi ý
           item.addEventListener('click', () => {
             searchInput.value = m.name;
             currentSearch = m.name.toLowerCase();
@@ -553,14 +541,12 @@
     }
   });
 
-  // Ẩn gợi ý khi bấm ra ngoài
   document.addEventListener('click', (e) => {
     if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
       suggestionsBox.classList.remove('show');
     }
   });
 
-  // Khôi phục gợi ý khi focus lại vào ô search (nếu có chữ)
   searchInput.addEventListener('focus', () => {
     if (searchInput.value.trim().length > 0) {
       suggestionsBox.classList.add('show');
@@ -571,7 +557,7 @@
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
   `;
