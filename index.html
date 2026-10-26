@@ -111,6 +111,45 @@
     -webkit-text-fill-color: transparent;
   }
 
+  /* AVATAR NGƯỜI DÙNG */
+  .user-profile {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .avatar-container {
+    position: relative;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    padding: 2px; /* Tạo viền dày */
+    background: var(--gradient); /* Viền gradient */
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+    transition: 0.3s ease;
+    cursor: pointer;
+  }
+
+  .avatar-container:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.8);
+  }
+
+  .user-avatar {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--bg); /* Viền đen tách biệt với gradient */
+    display: block;
+  }
+
+  .status-dot {
+    position: absolute;
+    bottom: 1px; right: 1px;
+    width: 10px; height: 10px;
+    background-color: var(--success);
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--success);
+  }
+
   /* HERO */
   .hero {
     max-width: 1200px;
@@ -484,6 +523,14 @@
     <div class="logo-icon">⚡</div>
     <div class="logo-text">W <span class="accent">Roblox</span></div>
   </div>
+  
+  <!-- AVATAR CỦA BẠN Ở ĐÂY -->
+  <div class="user-profile">
+    <div class="avatar-container">
+      <img src="https://i.ibb.co/8DYn3j1L/2-F9-D1447-5-BB1-4-D2-D-AF83-1990628-FA41-C.png" alt="Avatar" class="user-avatar">
+      <span class="status-dot"></span>
+    </div>
+  </div>
 </nav>
 
 <section class="hero">
@@ -589,7 +636,6 @@
 
   // ===== RENDER =====
   function render() {
-    // Chỉ còn tìm kiếm, không còn phân loại
     const filtered = scripts.filter(s => {
       return s.name.toLowerCase().includes(currentSearch) ||
              s.desc.toLowerCase().includes(currentSearch);
