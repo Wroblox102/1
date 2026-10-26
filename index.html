@@ -3,358 +3,723 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roblox Script Hub - Chia Sẻ Script Miễn Phí</title>
+<title>NexusScripts — Roblox Script Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+  :root {
+    --bg: #08080f;
+    --bg-2: #0f0f1a;
+    --surface: rgba(255, 255, 255, 0.03);
+    --surface-2: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(139, 92, 246, 0.5);
+    --text: #f5f5fa;
+    --text-dim: #9ca3af;
+    --text-mute: #6b7280;
+    --primary: #8b5cf6;
+    --primary-2: #6366f1;
+    --accent: #22d3ee;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #22d3ee 100%);
+    --glow: 0 0 40px rgba(139, 92, 246, 0.4);
   }
+
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
 
   body {
-    background: #0d1117;
-    color: #e6edf3;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, #1f6feb 0%, #6e40c9 100%);
-    padding: 20px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  /* Animated background orbs */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+  body::before {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    top: -200px; left: -200px;
+    animation: float1 20s ease-in-out infinite;
+  }
+  body::after {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, #22d3ee 0%, transparent 70%);
+    bottom: -200px; right: -200px;
+    animation: float2 25s ease-in-out infinite;
+  }
+  @keyframes float1 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(200px, 150px) scale(1.2); }
+  }
+  @keyframes float2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-150px, -100px) scale(1.3); }
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    background: rgba(8, 8, 15, 0.7);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px;
+  }
+
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 800; font-size: 20px; letter-spacing: -0.5px;
+  }
+
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--gradient);
+    border-radius: 12px;
+    display: grid; place-items: center;
+    font-size: 20px;
+    box-shadow: var(--glow);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
+    50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.8); }
+  }
+
+  .logo-text .accent {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .nav-links {
+    display: flex; gap: 8px;
+  }
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+  .nav-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: var(--gradient);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  }
+  .nav-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 30px rgba(139, 92, 246, 0.6); }
+
+  /* HERO */
+  .hero {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 40px 60px;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 100px;
+    font-size: 13px;
+    color: #c4b5fd;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--success);
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+  .hero h1 .gradient {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+
+  .stats {
+    display: flex; justify-content: center; gap: 60px;
     flex-wrap: wrap;
-    gap: 15px;
-    box-shadow: 0 4px 20px rgba(31, 111, 235, 0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    margin-top: 40px;
   }
-
-  header h1 {
-    font-size: 26px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .stat { text-align: center; }
+  .stat-value {
+    font-size: 32px; font-weight: 800;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
+  .stat-label { font-size: 13px; color: var(--text-mute); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
-  header h1::before {
-    content: "🎮";
-    font-size: 28px;
-  }
-
-  .search-box {
-    flex: 1;
-    max-width: 400px;
+  /* SEARCH */
+  .search-section {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    padding: 0 40px;
     position: relative;
   }
 
-  .search-box input {
+  .search-wrapper {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4px;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+  }
+  .search-wrapper:focus-within {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+  }
+
+  .search-wrapper input {
     width: 100%;
-    padding: 12px 45px 12px 18px;
-    border-radius: 25px;
-    border: 2px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.1);
-    color: white;
-    font-size: 14px;
+    padding: 16px 60px 16px 20px;
+    background: transparent;
+    border: none;
     outline: none;
-    transition: 0.3s;
+    color: var(--text);
+    font-size: 15px;
+    font-family: inherit;
   }
+  .search-wrapper input::placeholder { color: var(--text-mute); }
 
-  .search-box input::placeholder { color: rgba(255,255,255,0.7); }
-  .search-box input:focus {
-    background: rgba(255,255,255,0.2);
-    border-color: white;
-  }
-
-  .search-box::after {
-    content: "🔍";
+  .search-icon {
     position: absolute;
-    right: 18px;
-    top: 50%;
+    right: 20px; top: 50%;
     transform: translateY(-50%);
+    color: var(--text-mute);
+    font-size: 18px;
+    pointer-events: none;
   }
 
-  /* CATEGORY FILTER */
-  .categories {
+  /* FILTERS */
+  .filters {
     display: flex;
-    gap: 10px;
-    padding: 20px 30px;
-    flex-wrap: wrap;
     justify-content: center;
-    background: #161b22;
-    border-bottom: 1px solid #30363d;
-  }
-
-  .cat-btn {
-    padding: 8px 20px;
-    border-radius: 20px;
-    border: 1px solid #30363d;
-    background: #21262d;
-    color: #e6edf3;
-    cursor: pointer;
-    font-size: 14px;
-    transition: 0.3s;
-  }
-
-  .cat-btn:hover {
-    background: #30363d;
-    transform: translateY(-2px);
-  }
-
-  .cat-btn.active {
-    background: linear-gradient(135deg, #1f6feb, #6e40c9);
-    border-color: transparent;
-    font-weight: bold;
-  }
-
-  /* GRID SCRIPTS */
-  .scripts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-    padding: 30px;
-    max-width: 1400px;
+    gap: 10px;
+    padding: 0 40px 40px;
+    flex-wrap: wrap;
+    max-width: 1000px;
     margin: 0 auto;
   }
 
-  .script-card {
-    background: #161b22;
-    border: 1px solid #30363d;
+  .filter-btn {
+    padding: 10px 22px;
     border-radius: 12px;
-    padding: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
     transition: 0.3s;
+    display: flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+  .filter-btn:hover {
+    color: var(--text);
+    background: var(--surface-2);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+  .filter-btn.active {
+    background: var(--gradient);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  }
+
+  /* GRID */
+  .scripts-grid {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    cursor: pointer;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 60%);
+    opacity: 0;
+    transition: 0.4s;
+    pointer-events: none;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-hover);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(139, 92, 246, 0.2);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     gap: 12px;
   }
 
-  .script-card:hover {
-    transform: translateY(-5px);
-    border-color: #1f6feb;
-    box-shadow: 0 10px 30px rgba(31, 111, 235, 0.2);
-  }
+  .card-title-wrap { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
 
-  .script-card h3 {
-    font-size: 18px;
-    color: #58a6ff;
-  }
-
-  .script-card .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    background: #21262d;
+  .card-icon {
+    width: 44px; height: 44px;
+    flex-shrink: 0;
     border-radius: 12px;
+    background: var(--gradient);
+    display: grid; place-items: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  }
+
+  .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-category {
     font-size: 11px;
-    color: #8b949e;
-    align-self: flex-start;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
   }
 
-  .script-card p {
-    color: #8b949e;
-    font-size: 14px;
-    line-height: 1.5;
-    flex: 1;
-  }
-
-  .script-card pre {
-    background: #0d1117;
-    padding: 12px;
+  .verified {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 10px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
     border-radius: 8px;
-    border-left: 3px solid #1f6feb;
-    font-size: 12px;
-    max-height: 100px;
-    overflow: auto;
-    color: #79c0ff;
-    font-family: 'Courier New', monospace;
-    white-space: pre-wrap;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--success);
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text-mute);
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .card-meta span { display: flex; align-items: center; gap: 5px; }
 
   .card-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 5px;
+    display: flex; gap: 10px; margin-top: auto;
   }
 
   .btn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 12px;
     border: none;
-    cursor: pointer;
-    font-weight: 600;
     font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  .btn-primary {
+    flex: 1;
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+  }
+  .btn-primary.copied {
+    background: linear-gradient(135deg, #10b981, #059669);
+  }
+
+  .btn-icon {
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .btn-icon:hover { color: var(--text); border-color: var(--border-hover); }
+
+  /* EMPTY */
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 100px 20px;
+    color: var(--text-mute);
+  }
+  .empty-icon { font-size: 80px; margin-bottom: 20px; opacity: 0.5; }
+  .empty h3 { color: var(--text-dim); margin-bottom: 8px; font-size: 20px; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
     transition: 0.3s;
   }
+  .modal-overlay.show { display: flex; opacity: 1; }
 
-  .btn-copy {
-    background: linear-gradient(135deg, #238636, #2ea043);
-    color: white;
+  .modal {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: 0.3s;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+  }
+  .modal-overlay.show .modal { transform: scale(1); }
+
+  .modal-header {
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .btn-copy:hover {
-    filter: brightness(1.15);
-    transform: scale(1.03);
+  .modal-title { font-size: 20px; font-weight: 700; }
+  .modal-title .accent { color: var(--accent); }
+
+  .modal-close {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: grid; place-items: center;
+  }
+  .modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: #ef4444; }
+
+  .modal-body {
+    padding: 28px;
+    overflow-y: auto;
+    flex: 1;
   }
 
-  .btn-copy.copied {
-    background: linear-gradient(135deg, #1f6feb, #6e40c9);
-  }
-
-  /* EMPTY STATE */
-  .empty {
-    text-align: center;
-    padding: 60px 20px;
-    color: #8b949e;
-    grid-column: 1 / -1;
-    font-size: 16px;
-  }
-
-  .empty::before {
-    content: "😕";
-    display: block;
-    font-size: 60px;
-    margin-bottom: 15px;
-  }
-
-  /* FOOTER */
-  footer {
-    text-align: center;
-    padding: 25px;
-    color: #8b949e;
+  .modal-code {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    border-top: 1px solid #30363d;
-    margin-top: 30px;
+    color: #a5d6ff;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
   }
 
-  footer a { color: #58a6ff; text-decoration: none; }
+  .modal-code::-webkit-scrollbar { width: 8px; height: 8px; }
+  .modal-code::-webkit-scrollbar-track { background: transparent; }
+  .modal-code::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .modal-actions { display: flex; gap: 12px; }
 
   /* TOAST */
   .toast {
     position: fixed;
     bottom: 30px;
-    right: 30px;
-    background: #238636;
+    left: 50%;
+    transform: translate(-50%, 150px);
+    background: rgba(16, 185, 129, 0.95);
+    backdrop-filter: blur(10px);
     color: white;
     padding: 14px 24px;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(35, 134, 54, 0.5);
+    border-radius: 14px;
     font-weight: 600;
-    transform: translateX(400px);
-    transition: 0.4s;
-    z-index: 999;
+    font-size: 14px;
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2000;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .toast.show { transform: translate(-50%, 0); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    text-align: center;
+    color: var(--text-mute);
+    font-size: 14px;
+  }
+  footer .gradient {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
   }
 
-  .toast.show { transform: translateX(0); }
-
-  @media (max-width: 600px) {
-    header { padding: 15px; }
-    header h1 { font-size: 20px; }
-    .scripts-grid { padding: 15px; grid-template-columns: 1fr; }
-    .categories { padding: 15px; }
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 20px 40px; }
+    .stats { gap: 30px; }
+    .stat-value { font-size: 24px; }
+    .search-section { padding: 0 20px; }
+    .filters { padding: 0 20px 30px; }
+    .scripts-grid { padding: 0 20px 60px; grid-template-columns: 1fr; }
+    .modal-body { padding: 20px; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Roblox Script Hub</h1>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Tìm script...">
+<nav>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Nexus<span class="accent">Scripts</span></div>
   </div>
-</header>
+  <div class="nav-links">
+    <a href="#">Trang chủ</a>
+    <a href="#">Scripts</a>
+    <a href="#">Hướng dẫn</a>
+    <a href="#">Cộng đồng</a>
+  </div>
+  <button class="nav-btn">Đăng nhập</button>
+</nav>
 
-<div class="categories" id="categories">
-  <button class="cat-btn active" data-cat="all">Tất cả</button>
-  <button class="cat-btn" data-cat="speed">Speed</button>
-  <button class="cat-btn" data-cat="jump">Jump</button>
-  <button class="cat-btn" data-cat="esp">ESP</button>
-  <button class="cat-btn" data-cat="auto">Auto Farm</button>
-  <button class="cat-btn" data-cat="tool">Tool</button>
+<section class="hero">
+  <div class="hero-badge">Hơn 5,000 scripts đang hoạt động</div>
+  <h1>Thư viện <span class="gradient">Script Roblox</span><br>Chất lượng cao</h1>
+  <p>Khám phá, tải xuống và chia sẻ các script Roblox tốt nhất từ cộng đồng. Cập nhật hàng ngày, miễn phí 100%.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-value">5,247</div><div class="stat-label">Scripts</div></div>
+    <div class="stat"><div class="stat-value">128K</div><div class="stat-label">Người dùng</div></div>
+    <div class="stat"><div class="stat-value">2.4M</div><div class="stat-label">Lượt tải</div></div>
+  </div>
+</section>
+
+<div class="search-section">
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng...">
+    <span class="search-icon">🔍</span>
+  </div>
 </div>
 
-<main class="scripts-grid" id="scriptsGrid"></main>
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-cat="all">✨ Tất cả</button>
+  <button class="filter-btn" data-cat="speed">⚡ Speed</button>
+  <button class="filter-btn" data-cat="jump">🦘 Jump</button>
+  <button class="filter-btn" data-cat="esp">👁️ ESP</button>
+  <button class="filter-btn" data-cat="auto">🤖 Auto Farm</button>
+  <button class="filter-btn" data-cat="tool">🔧 Tool</button>
+</div>
+
+<main class="scripts-grid" id="grid"></main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Script</div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body">
+      <pre class="modal-code" id="modalCode"></pre>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="modalCopy" style="flex:1">📋 Copy Script</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✅ Đã sao chép script!</div>
 
 <footer>
-  © 2025 Roblox Script Hub - Chia sẻ vì cộng đồng ❤️<br>
-  <small>Lưu ý: Chỉ sử dụng cho mục đích học tập. Tôn trọng Roblox ToS.</small>
+  Made with <span class="gradient">❤️</span> for the Roblox community · © 2025 NexusScripts<br>
+  <small style="opacity:0.6">Sử dụng có trách nhiệm · Tôn trọng Roblox ToS</small>
 </footer>
 
-<div class="toast" id="toast">✅ Đã copy script!</div>
-
 <script>
-  // ===== DANH SÁCH SCRIPT (bạn có thể thêm/sửa tùy ý) =====
   const scripts = [
     {
-      id: 1,
-      name: "Speed Hack",
-      category: "speed",
-      desc: "Tăng tốc độ di chuyển của nhân vật lên gấp nhiều lần.",
-      code: `local player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nchar.Humanoid.WalkSpeed = 100`
+      id: 1, name: "Speed Hack Pro", category: "speed", icon: "⚡", verified: true,
+      desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
+      views: "42.5K", rating: 4.9,
+      code: `-- Speed Hack Pro v2.1\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nlocal humanoid = char:WaitForChild("Humanoid")\n\nhumanoid.WalkSpeed = 100\n\n-- Auto update khi respawn\nplayer.CharacterAdded:Connect(function(c)\n    c:WaitForChild("Humanoid").WalkSpeed = 100\nend)\n\nprint("✅ Speed Hack đã bật!")`
     },
     {
-      id: 2,
-      name: "Jump Power Max",
-      category: "jump",
-      desc: "Tăng lực nhảy cực cao cho nhân vật.",
-      code: `local player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nchar.Humanoid.JumpPower = 200`
+      id: 2, name: "Mega Jump", category: "jump", icon: "🦘", verified: true,
+      desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
+      views: "28.1K", rating: 4.7,
+      code: `-- Mega Jump Script\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character or player.CharacterAdded:Wait()\nlocal humanoid = char:WaitForChild("Humanoid")\n\nhumanoid.JumpPower = 200\nhumanoid.UseJumpPower = true\n\n-- Infinite jump\nlocal UIS = game:GetService("UserInputService")\nUIS.JumpRequest:Connect(function()\n    char.Humanoid:ChangeState("Jumping")\nend)`
     },
     {
-      id: 3,
-      name: "ESP Player",
-      category: "esp",
-      desc: "Hiển thị tên và vị trí của tất cả người chơi qua tường.",
-      code: `for _, p in pairs(game.Players:GetPlayers()) do\n    if p ~= game.Players.LocalPlayer then\n        local hl = Instance.new("Highlight")\n        hl.Parent = p.Character\n        hl.FillColor = Color3.fromRGB(255,0,0)\n    end\nend`
+      id: 3, name: "Advanced ESP", category: "esp", icon: "👁️", verified: true,
+      desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
+      views: "61.2K", rating: 5.0,
+      code: `-- Advanced ESP\nlocal function createESP(plr)\n    if plr == game.Players.LocalPlayer then return end\n    if not plr.Character then return end\n    \n    local hl = Instance.new("Highlight")\n    hl.FillColor = Color3.fromRGB(255, 0, 0)\n    hl.FillTransparency = 0.5\n    hl.OutlineColor = Color3.fromRGB(255, 255, 255)\n    hl.Parent = plr.Character\n    \n    local bb = Instance.new("BillboardGui")\n    bb.Size = UDim2.new(0, 100, 0, 50)\n    bb.StudsOffset = Vector3.new(0, 3, 0)\n    bb.AlwaysOnTop = true\n    bb.Parent = plr.Character.Head\n    \n    local name = Instance.new("TextLabel")\n    name.Size = UDim2.new(1, 0, 1, 0)\n    name.BackgroundTransparency = 1\n    name.Text = plr.Name\n    name.TextColor3 = Color3.new(1, 1, 1)\n    name.TextStrokeTransparency = 0\n    name.Parent = bb\nend\n\nfor _, p in pairs(game.Players:GetPlayers()) do createESP(p) end\ngame.Players.PlayerAdded:Connect(function(p) p.CharacterAdded:Connect(function() createESP(p) end) end)`
     },
     {
-      id: 4,
-      name: "Auto Farm Coins",
-      category: "auto",
-      desc: "Tự động thu thập coin trong nhiều game simulator.",
-      code: `while true do\n    for _, v in pairs(game.Workspace:GetDescendants()) do\n        if v.Name == "Coin" then\n            v.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame\n        end\n    end\n    task.wait(0.1)\nend`
+      id: 4, name: "Auto Farm Ultimate", category: "auto", icon: "🤖", verified: true,
+      desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
+      views: "89.4K", rating: 4.8,
+      code: `-- Auto Farm Ultimate\nlocal player = game.Players.LocalPlayer\nlocal hrp = player.Character:WaitForChild("HumanoidRootPart")\n\nwhile task.wait(0.1) do\n    for _, obj in pairs(workspace:GetDescendants()) do\n        if obj.Name == "Coin" or obj.Name == "Gem" then\n            pcall(function()\n                obj.CFrame = hrp.CFrame\n            end)\n        end\n    end\nend`
     },
     {
-      id: 5,
-      name: "Fly Script",
-      category: "tool",
-      desc: "Cho phép nhân vật bay lượn tự do trên không.",
-      code: `local player = game.Players.LocalPlayer\nlocal hrp = player.Character.HumanoidRootPart\nlocal bp = Instance.new("BodyPosition")\nbp.Parent = hrp\nbp.MaxForce = Vector3.new(1e6,1e6,1e6)\nbp.Position = hrp.Position`
+      id: 5, name: "Fly V3", category: "tool", icon: "🕊️", verified: false,
+      desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
+      views: "35.7K", rating: 4.5,
+      code: `-- Fly V3\nlocal player = game.Players.LocalPlayer\nlocal char = player.Character\nlocal hrp = char.HumanoidRootPart\n\nlocal bp = Instance.new("BodyPosition", hrp)\nbp.MaxForce = Vector3.new(1e6, 1e6, 1e6)\nbp.Position = hrp.Position\n\nlocal bg = Instance.new("BodyGyro", hrp)\nbg.MaxTorque = Vector3.new(1e6, 1e6, 1e6)\nbg.P = 1000`
     },
     {
-      id: 6,
-      name: "Infinite Yield",
-      category: "tool",
-      desc: "Admin script phổ biến với hơn 200 lệnh tiện ích.",
-      code: `loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()`
+      id: 6, name: "Infinite Yield", category: "tool", icon: "♾️", verified: true,
+      desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
+      views: "152K", rating: 5.0,
+      code: `-- Infinite Yield Admin\nloadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()`
     },
     {
-      id: 7,
-      name: "Noclip",
-      category: "tool",
-      desc: "Xuyên qua mọi vật thể trong game (bỏ qua va chạm).",
-      code: `local player = game.Players.LocalPlayer\nplayer.Character.HumanoidRootPart.CanCollide = false\nfor _, v in pairs(player.Character:GetDescendants()) do\n    if v:IsA("BasePart") then v.CanCollide = false end\nend`
+      id: 7, name: "Noclip Ghost", category: "tool", icon: "👻", verified: false,
+      desc: "Đi xuyên qua tường, sàn nhà và mọi vật thể trong game.",
+      views: "22.3K", rating: 4.3,
+      code: `-- Noclip\nlocal player = game.Players.LocalPlayer\nlocal noclip = true\n\nplayer.Character.HumanoidRootPart.CanCollide = false\nfor _, v in pairs(player.Character:GetDescendants()) do\n    if v:IsA("BasePart") then\n        v.CanCollide = false\n    end\nend`
     },
     {
-      id: 8,
-      name: "Auto Clicker",
-      category: "auto",
-      desc: "Tự động click chuột liên tục cho các game clicker.",
-      code: `while true do\n    game:GetService("VirtualUser"):ClickButton1(Vector2.new())\n    task.wait(0.05)\nend`
+      id: 8, name: "Auto Clicker 1000 CPS", category: "auto", icon: "👆", verified: false,
+      desc: "Tự động click chuột với tốc độ cực cao cho các game clicker.",
+      views: "45.9K", rating: 4.6,
+      code: `-- Auto Clicker\nlocal VIM = game:GetService("VirtualInputManager")\n\nwhile task.wait(0.001) do\n    VIM:SendMouseButtonEvent(0, 0, 0, true, game, 1)\n    VIM:SendMouseButtonEvent(0, 0, 0, false, game, 1)\nend`
     }
   ];
 
-  const grid = document.getElementById('scriptsGrid');
+  const grid = document.getElementById('grid');
   const searchInput = document.getElementById('searchInput');
-  const catBtns = document.querySelectorAll('.cat-btn');
+  const filterBtns = document.querySelectorAll('.filter-btn');
   const toast = document.getElementById('toast');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalCode = document.getElementById('modalCode');
+  const modalCopy = document.getElementById('modalCopy');
+  const modalClose = document.getElementById('modalClose');
 
   let currentCat = 'all';
   let currentSearch = '';
+  let activeScript = null;
 
   // ===== RENDER =====
-  function renderScripts() {
+  function render() {
     const filtered = scripts.filter(s => {
       const matchCat = currentCat === 'all' || s.category === currentCat;
       const matchSearch = s.name.toLowerCase().includes(currentSearch) ||
@@ -364,86 +729,134 @@
 
     grid.innerHTML = '';
 
-    if (filtered.length === 0) {
-      grid.innerHTML = '<div class="empty">Không tìm thấy script nào phù hợp</div>';
+    if (!filtered.length) {
+      grid.innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🔍</div>
+          <h3>Không tìm thấy script</h3>
+          <p>Thử tìm với từ khóa khác hoặc chọn danh mục khác</p>
+        </div>`;
       return;
     }
 
-    filtered.forEach(s => {
+    filtered.forEach((s, idx) => {
       const card = document.createElement('div');
-      card.className = 'script-card';
+      card.className = 'card';
+      card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
       card.innerHTML = `
-        <span class="badge">#${s.category.toUpperCase()}</span>
-        <h3>${s.name}</h3>
-        <p>${s.desc}</p>
-        <pre>${escapeHtml(s.code)}</pre>
+        <div class="card-header">
+          <div class="card-title-wrap">
+            <div class="card-icon">${s.icon}</div>
+            <div style="min-width:0">
+              <div class="card-title">${s.name}</div>
+              <div class="card-category">${s.category.toUpperCase()}</div>
+            </div>
+          </div>
+          ${s.verified ? '<span class="verified">✓ Verified</span>' : ''}
+        </div>
+        <p class="card-desc">${s.desc}</p>
+        <div class="card-meta">
+          <span>👁 ${s.views}</span>
+          <span>⭐ ${s.rating}</span>
+        </div>
         <div class="card-actions">
-          <button class="btn btn-copy" data-code="${escapeAttr(s.code)}">📋 Copy Script</button>
+          <button class="btn btn-primary" data-copy="${s.id}">📋 Copy</button>
+          <button class="btn btn-icon" data-view="${s.id}" title="Xem code">👁 Xem</button>
         </div>
       `;
+
+      card.querySelector('[data-copy]').addEventListener('click', e => {
+        e.stopPropagation();
+        copyScript(s.code, e.target);
+      });
+      card.querySelector('[data-view]').addEventListener('click', e => {
+        e.stopPropagation();
+        openModal(s);
+      });
+      card.addEventListener('click', () => openModal(s));
+
       grid.appendChild(card);
     });
-
-    // Gắn sự kiện copy
-    document.querySelectorAll('.btn-copy').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const code = e.target.dataset.code;
-        copyToClipboard(decodeURIComponent(code), e.target);
-      });
-    });
-  }
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function escapeAttr(str) {
-    return encodeURIComponent(str);
   }
 
   // ===== COPY =====
-  function copyToClipboard(text, btn) {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => showCopied(btn));
-    } else {
+  async function copyScript(code, btn) {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
       const ta = document.createElement('textarea');
-      ta.value = text;
+      ta.value = code;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand('copy');
-      document.body.removeChild(ta);
-      showCopied(btn);
+      ta.remove();
     }
+    if (btn) {
+      const original = btn.innerHTML;
+      btn.innerHTML = '✅ Đã copy!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+    showToast();
   }
 
-  function showCopied(btn) {
-    btn.textContent = '✅ Đã copy!';
-    btn.classList.add('copied');
+  function showToast() {
     toast.classList.add('show');
-    setTimeout(() => {
-      btn.textContent = '📋 Copy Script';
-      btn.classList.remove('copied');
-      toast.classList.remove('show');
-    }, 1500);
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => toast.classList.remove('show'), 2000);
   }
+
+  // ===== MODAL =====
+  function openModal(s) {
+    activeScript = s;
+    modalTitle.innerHTML = `${s.icon} ${s.name} <span class="accent">· ${s.category}</span>`;
+    modalCode.textContent = s.code;
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  modalClose.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  modalCopy.addEventListener('click', () => {
+    if (activeScript) copyScript(activeScript.code, modalCopy);
+  });
 
   // ===== EVENTS =====
   searchInput.addEventListener('input', e => {
     currentSearch = e.target.value.toLowerCase().trim();
-    renderScripts();
+    render();
   });
 
-  catBtns.forEach(btn => {
+  filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      catBtns.forEach(b => b.classList.remove('active'));
+      filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentCat = btn.dataset.cat;
-      renderScripts();
+      render();
     });
   });
 
-  // ===== INIT =====
-  renderScripts();
+  // ===== ANIMATION =====
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  `;
+  document.head.appendChild(style);
+
+  render();
 </script>
 
 </body>
