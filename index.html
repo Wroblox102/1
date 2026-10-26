@@ -9,21 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* BẢNG MÀU MỚI (LIGHT MODE) */
-    --bg: #f3f4f6; /* Nền xám rất nhạt */
-    --bg-2: #ffffff; /* Nền trắng tinh cho các thẻ */
+    /* LIGHT MODE (Trắng nhiều, đen ít) */
+    --bg: #f3f4f6; 
+    --bg-2: #ffffff; 
     --surface: #ffffff;
     --surface-2: #f9fafb;
-    --border: #e5e7eb; /* Viền xám nhạt */
+    --border: #e5e7eb; 
     --border-hover: #8b5cf6;
     
-    --text: #111827; /* Chữ đen/xám đậm */
+    --text: #111827; 
     --text-dim: #4b5563;
     --text-mute: #9ca3af;
     
     --primary: #8b5cf6;
     --primary-2: #6366f1;
-    --accent: #0ea5e9; /* Xanh sáng hơn cho dễ đọc trên nền trắng */
+    --accent: #0ea5e9; 
     --success: #10b981;
     
     --gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #22d3ee 100%);
@@ -46,7 +46,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Hiệu ứng nền mờ (giảm độ đậm để hợp với nền sáng) */
+  /* Hiệu ứng nền mờ */
   body::before, body::after {
     content: '';
     position: fixed;
@@ -54,7 +54,7 @@
     filter: blur(120px);
     z-index: -1;
     pointer-events: none;
-    opacity: 0.15; /* Giảm độ đậm */
+    opacity: 0.15; 
   }
   body::before {
     width: 600px; height: 600px;
@@ -199,13 +199,13 @@
     border: 1px solid var(--border);
     border-radius: 20px; padding: 0; position: relative;
     overflow: hidden; transition: 0.3s ease-in-out;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     display: flex; flex-direction: column;
   }
   .card:hover {
     transform: translateY(-4px); 
     border-color: var(--border-hover);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   }
 
   /* ẢNH SCRIPT */
@@ -340,7 +340,6 @@
     <input type="text" id="searchInput" placeholder="Tìm script, game, chức năng..." autocomplete="off">
     <span class="search-icon">🔍</span>
   </div>
-  <!-- Bảng gợi ý tìm kiếm -->
   <div class="suggestions" id="suggestions"></div>
 </div>
 
@@ -358,69 +357,53 @@
     {
       id: 1, name: "Speed Hack Pro", category: "speed", verified: true,
       desc: "Tăng tốc độ di chuyển lên gấp 10 lần, không bị phát hiện bởi anti-cheat thông thường.",
-      image: defaultImage, 
-      linkMain: "https://example.com/main1", 
-      linkSub: "https://example.com/sub1"    
+      image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 2, name: "Mega Jump", category: "jump", verified: true,
       desc: "Nhảy cao gấp 5 lần bình thường, kết hợp với speed để di chuyển cực nhanh.",
-      image: defaultImage,
-      linkMain: "https://example.com/main2",
-      linkSub: "https://example.com/sub2"
+      image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 3, name: "Advanced ESP", category: "esp", verified: true,
       desc: "Hiển thị tên, HP, khoảng cách của mọi người chơi xuyên qua tường.",
-      image: defaultImage,
-      linkMain: "https://example.com/main3",
-      linkSub: "https://example.com/sub3"
+      image: defaultImage, linkMain: "#", linkSub: "#"
     },
     {
       id: 4, name: "Auto Farm Ultimate", category: "auto", verified: true,
       desc: "Tự động farm coin, XP, và item trong hầu hết các game simulator phổ biến.",
-      image: defaultImage,
-      linkMain: "https://example.com/main4",
-      linkSub: "https://example.com/sub4"
-    },
-    {
-      id: 5, name: "Fly V3", category: "tool", verified: false,
-      desc: "Bay lượn tự do với điều khiển WASD, có thể xuyên vật thể.",
-      image: defaultImage,
-      linkMain: "https://example.com/main5",
-      linkSub: "https://example.com/sub5"
-    },
-    {
-      id: 6, name: "Infinite Yield", category: "tool", verified: true,
-      desc: "Admin script kinh điển với hơn 200 lệnh: teleport, spawn, đổi tốc độ, kick, v.v.",
-      image: defaultImage,
-      linkMain: "https://example.com/main6",
-      linkSub: "https://example.com/sub6"
+      image: defaultImage, linkMain: "#", linkSub: "#"
     }
   ];
 
   const grid = document.getElementById('grid');
   const searchInput = document.getElementById('searchInput');
   const suggestionsBox = document.getElementById('suggestions');
-  
   let currentSearch = '';
 
-  // ================= XỬ LÝ NHẠC NỀN =================
+  // ================= XỬ LÝ NHẠC NỀN (LOGIC MỚI) =================
   const bgMusic = document.getElementById('bgMusic');
   const musicToggle = document.getElementById('musicToggle');
   const musicIcon = document.getElementById('musicIcon');
+  
   let isMusicPlaying = false;
+  let isMutedByUser = false; // Biến quan trọng: Đánh dấu người dùng đã chủ động tắt nhạc
 
   bgMusic.volume = 0.4; 
 
   function playMusic() {
+    // Nếu người dùng đã chủ động tắt (isMutedByUser = true) thì không làm gì cả
+    if (isMutedByUser) return;
+
     const playPromise = bgMusic.play();
     if (playPromise !== undefined) {
       playPromise.then(() => {
+        // Phát thành công
         isMusicPlaying = true;
         musicIcon.textContent = '🎵';
         musicToggle.classList.add('playing');
       }).catch(() => {
+        // Bị trình duyệt chặn
         isMusicPlaying = false;
         musicIcon.textContent = '🔇';
         musicToggle.classList.remove('playing');
@@ -428,29 +411,38 @@
     }
   }
 
+  // 1. Cố gắng phát ngay khi load (thường sẽ bị chặn)
   playMusic();
 
-  // Bấm vào màn hình bất kỳ đâu để phát nhạc nếu bị trình duyệt chặn
-  document.addEventListener('click', function initAudio() {
-    if (!isMusicPlaying) playMusic();
-    document.removeEventListener('click', initAudio);
-  }, { once: true });
+  // 2. Bấm vào BẤT KỲ ĐÂU trên màn hình
+  document.addEventListener('click', () => {
+    // Nếu nhạc CHƯA phát VÀ người dùng CHƯA chủ động tắt -> Thử phát nhạc
+    if (!isMusicPlaying && !isMutedByUser) {
+      playMusic();
+    }
+  });
 
-  // Nút tắt/mở nhạc
+  // 3. Nút Tắt / Mở Nhạc
   musicToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
+    e.stopPropagation(); // Ngăn sự kiện click lan ra ngoài màn hình (tránh kích hoạt tự động phát)
+    
     if (isMusicPlaying) {
+      // Đang phát -> Bấm vào để TẮT
       bgMusic.pause();
       isMusicPlaying = false;
+      isMutedByUser = true; // Đánh dấu: Người dùng đã tắt, không được tự phát nữa
       musicIcon.textContent = '🔇';
       musicToggle.classList.remove('playing');
     } else {
+      // Đang tắt -> Bấm vào để BẬT
       bgMusic.play();
       isMusicPlaying = true;
+      isMutedByUser = false; // Bỏ đánh dấu tắt
       musicIcon.textContent = '🎵';
       musicToggle.classList.add('playing');
     }
   });
+  // ==============================================================
 
   // ================= RENDER SCRIPT =================
   function renderScripts() {
@@ -476,12 +468,10 @@
       card.className = 'card';
       card.style.animation = `fadeIn 0.4s ease-out ${idx * 0.05}s backwards`;
       
-      // Đã xóa phần hiển thị View (con mắt) và Rating (ngôi sao) tại đây
       card.innerHTML = `
         <div class="card-image">
           <img src="${s.image}" alt="${s.name}">
         </div>
-        
         <div class="card-content">
           <div class="card-header">
             <div class="card-title-wrap">
@@ -490,10 +480,7 @@
             </div>
             ${s.verified ? '<span class="verified">✓ Verified</span>' : ''}
           </div>
-          
           <p class="card-desc">${s.desc}</p>
-          
-          <!-- NÚT LINK -->
           <div class="card-actions">
             <a href="${s.linkMain}" target="_blank" class="btn btn-main">🔗 Link Chính</a>
             <a href="${s.linkSub}" target="_blank" class="btn btn-sub">📁 Link Phụ</a>
@@ -508,7 +495,6 @@
   searchInput.addEventListener('input', (e) => {
     const val = e.target.value.toLowerCase().trim();
     currentSearch = val;
-    
     renderScripts();
 
     suggestionsBox.innerHTML = '';
@@ -553,7 +539,6 @@
     }
   });
 
-  // Hiệu ứng xuất hiện
   const style = document.createElement('style');
   style.textContent = `
     @keyframes fadeIn {
@@ -563,7 +548,6 @@
   `;
   document.head.appendChild(style);
 
-  // Chạy lần đầu
   renderScripts();
 </script>
 
